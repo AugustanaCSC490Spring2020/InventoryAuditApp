@@ -6,4 +6,14 @@
     <string name="inventoryButton">Inventory</string>
     <string name="auditButton">Audit</string>
     <string name="aboutButton">About</string>
+
+    //Inventory Search Page
+    <string name="inventorySearchPageTitle">Search in Inventory</string>
+
+    //Audit Search Page
+    <string name="auditSearchPageTitle">Audit from Inventory</string>
+
+    //About Page
+    <string name="aboutPageTitle">About</string>
+
 </resources>
