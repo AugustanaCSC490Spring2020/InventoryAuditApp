@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">InventoryAuditApp</string>
+
+    //Home Page
+    <string name="homePageTitle">Title</string>
+    <string name="inventoryButton">Inventory</string>
+    <string name="auditButton">Audit</string>
+    <string name="aboutButton">About</string>
 </resources>
