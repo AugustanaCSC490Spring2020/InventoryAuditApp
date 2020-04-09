@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "725429468019",
+    "firebase_url": "https://inventoryauditapp.firebaseio.com",
+    "project_id": "inventoryauditapp",
+    "storage_bucket": "inventoryauditapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725429468019:android:6e2e5a6a284d92fd52a306",
+        "android_client_info": {
+          "package_name": "com.example.inventoryauditapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725429468019-8o3v20cbvu93eso3e35e6ng6lo85sb25.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.inventoryauditapp",
+            "certificate_hash": "e7703ff25b4d78752abdad69f6e209b47bac69ec"
+          }
+        },
+        {
+          "client_id": "725429468019-vlgs02dd4p43khodjl4duvfe89a0ksqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF_dH0K4-kWEaOzWCWUYfzsBDHU2VvFJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725429468019-vlgs02dd4p43khodjl4duvfe89a0ksqs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
