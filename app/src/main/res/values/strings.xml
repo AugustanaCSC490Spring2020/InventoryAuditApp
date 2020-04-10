@@ -7,11 +7,14 @@
     <string name="auditButton">Audit</string>
     <string name="aboutButton">About</string>
 
-    //Inventory Search Page
+    //Inventory and Audit Search Page
     <string name="inventorySearchPageTitle">Search in Inventory</string>
-
-    //Audit Search Page
     <string name="auditSearchPageTitle">Audit from Inventory</string>
+    <string name="itemTextField">Item</string>
+    <string name="buildingTextField">Building</string>
+    <string name="roomTextField">Room</string>
+    <string name="searchButton">Search</string>
+    <string name="resetButton">Reset</string>
 
     //About Page
     <string name="aboutPageTitle">About</string>
