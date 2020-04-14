@@ -1,5 +1,6 @@
 package com.example.inventoryauditapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -12,14 +13,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class ModifyItemPage extends AppCompatActivity {
 
     //buttons at the bottom of the screen
     private Button submitButton;
     private Button cancelButton;
 
-    //Spinner that lets the use select the item type ie Computer or Printer
-    private Spinner itemTypeSpinner;
+    //id of the item being edited
+    private TextView itemIDTextView;
 
     //all text fields that the user can modify
     private EditText buildingEditText;
@@ -34,29 +41,26 @@ public class ModifyItemPage extends AppCompatActivity {
     private TextView OSTextView;
     private TextView lastScannedTextView;
 
+    //some hard coded data references for testing
+    String buildingNum = "Old Main";
+    String roomNum = "1";
+    String itemType = "Computer"; //hard coded for now.  Will be dynamic later
+    String id = "111004";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_item_page);
 
         initUI();
+        setComponentVisibility(); //Todo grab item type from other screen... ie Computer or Printer
+
         initializeTextFields();
 
 
         changeActivity(cancelButton, InventorySearchResultsPage.class);
 
-        //when a new item is selected on the spinner
-        itemTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                handleItemSpinnerChange();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //left intentionally blank
-            }
-        });
 
         //I know this is redundant now but will later need to call external method to store data
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -81,14 +85,46 @@ public class ModifyItemPage extends AppCompatActivity {
      * Todo initialize text fields to the current data in the database
      */
     public void initializeTextFields(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(buildingNum).child(roomNum).child(itemType).child(id);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(itemType.equals("Computer")){
+                    Computer c = dataSnapshot.getValue(Computer.class);
+                    itemIDTextView.setText(c.getIdNumber()+"");
+                    buildingEditText.setText(c.getBuilding());
+                    roomEditText.setText(c.getRoomNumber()+"");
+                    brandEditText.setText(c.getBrand());
+                    dateAddedEditText.setText(c.getDateAdded().toString());
+                    modifiedByEditText.setText(c.getModifiedBy().toString());
+                    OSEditText.setText(c.getOs());
+                    lastScannedEditText.setText(c.getLastScanned().toString());
+                }
+                else if (itemType.equals("Printer")){
+                    Printer p = dataSnapshot.getValue(Printer.class);
+                    itemIDTextView.setText(p.getIdNumber());
+                    buildingEditText.setText(p.getBuilding());
+                    roomEditText.setText(p.getRoomNumber());
+                    brandEditText.setText(p.getBrand());
+                    dateAddedEditText.setText(p.getDateAdded().toString());
+                    modifiedByEditText.setText(p.getModifiedBy().toString());
+                }
+                else{
+                    //could just be an if - else statement but leaving room for more items being added
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     /**
      * OS and Last Scanned should only be visible when a Computer is selected
      */
-    public void handleItemSpinnerChange(){
-        String itemType = itemTypeSpinner.getSelectedItem().toString();
+    public void setComponentVisibility(){
         if(itemType.equals("Computer")){
             OSTextView.setVisibility(View.VISIBLE);
             OSEditText.setVisibility(View.VISIBLE);
@@ -125,14 +161,15 @@ public class ModifyItemPage extends AppCompatActivity {
     public void initUI(){
         submitButton        = findViewById(R.id.submitModifyButton);
         cancelButton        = findViewById(R.id.cancelModifyButton);
-        itemTypeSpinner     = findViewById(R.id.itemTypeSpinner);
         buildingEditText    = findViewById(R.id.buildingEditText);
         roomEditText        = findViewById(R.id.roomEditText);
         OSEditText          = findViewById(R.id.OSEditText);
         brandEditText       = findViewById(R.id.brandEditText);
+        dateAddedEditText   = findViewById(R.id.dateAddedEditText);
         lastScannedEditText = findViewById(R.id.lastScannedEditText);
         modifiedByEditText  = findViewById(R.id.modifiedByEditText);
         OSTextView          = findViewById(R.id.OSTextView);
         lastScannedTextView = findViewById(R.id.lastScannedTextView);
+        itemIDTextView      = findViewById(R.id.itemIDTextView);
     }
 }
