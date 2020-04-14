@@ -30,7 +30,7 @@
     <string name="modifyItem">Modify Item</string>
 
     //TextField Labels for Add and Modify Item Page
-    <string name="itemType">Item Name</string>
+    <string name="itemID">Item ID</string>
     <string name="building">Building</string>
     <string name="room">Room</string>
     <string name="OS">OS</string>

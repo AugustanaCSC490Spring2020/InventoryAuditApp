@@ -15,6 +15,12 @@ public class User {
         this.email = email;
     }
 
+    //alternate constructor for entering just a username
+    public User(String username) {
+        this.username = username;
+        this.email = "";
+    }
+
     //getters
     public String getUsername() {
         return username;

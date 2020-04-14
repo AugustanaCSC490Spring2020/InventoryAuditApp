@@ -27,6 +27,17 @@ public class Printer {
         this.modifiedBy = modifiedBy;
     }
 
+    // alternate constructor with no type
+    public Printer(int idNumber, String building, int roomNumber, String brand, Date dateAdded, User modifiedBy) {
+        this.idNumber = idNumber;
+        this.building = building;
+        this.roomNumber = roomNumber;
+        this.type = "";
+        this.brand = brand;
+        this.dateAdded = dateAdded;
+        this.modifiedBy = modifiedBy;
+    }
+
     //getters and setters for all fields
     public int getIdNumber() {
         return idNumber;
