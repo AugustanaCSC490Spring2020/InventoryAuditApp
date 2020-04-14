@@ -43,6 +43,8 @@
         <item>Printer</item>
     </array>
 
-
+    //Add Items Page
+    <string name="item">Item</string>
+    <string name="type">Type</string>
 
 </resources>

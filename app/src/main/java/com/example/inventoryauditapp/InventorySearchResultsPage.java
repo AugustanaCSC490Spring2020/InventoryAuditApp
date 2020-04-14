@@ -23,7 +23,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         initIU();
 
         //Add Item Button
-        //changeActivity(addItemButton, );  will implement when Scott creates Add Item Page
+        changeActivity(addItemButton, AddItemPage.class);
 
         //Modify Item Button
         changeActivity(modifyItemButton,ModifyItemPage.class);
