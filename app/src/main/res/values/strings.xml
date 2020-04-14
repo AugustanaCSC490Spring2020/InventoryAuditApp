@@ -1,31 +1,48 @@
 <resources>
     <string name="app_name">InventoryAuditApp</string>
 
+    //Commonly Used
+    <string name="searchButton">Search</string>
+    <string name="resetButton">Reset</string>
+    <string name="submitButton">Submit</string>
+    <string name="cancelButton">Cancel</string>
+
+
     //Home Page
     <string name="homePageTitle">Title</string>
     <string name="inventoryButton">Inventory</string>
     <string name="auditButton">Audit</string>
     <string name="aboutButton">About</string>
 
-    //Inventory Search Page
+    //Inventory and Audit Search Page
     <string name="inventorySearchPageTitle">Search in Inventory</string>
-
-    //Audit Search Page
     <string name="auditSearchPageTitle">Audit from Inventory</string>
+    <string name="itemTextField">Item</string>
+    <string name="buildingTextField">Building</string>
+    <string name="roomTextField">Room</string>
 
     //About Page
     <string name="aboutPageTitle">About</string>
 
-    //Add Item Page
-    <string name="addItemTitle">Add Item</string>
-    <string name="itemText">Item</string>
-    <string name="buildingText">Building</string>
-    <string name="roomText">Room</string>
-    <string name="osText">OS</string>
-    <string name="brandText">Brand</string>
-    <string name="lastScannedText">Last Scanned</string>
+    //Inventory Search Results Page
+    <string name="inventorySearchResultsTitle">Results</string>
+    <string name="addItem">Add Item</string>
+    <string name="modifyItem">Modify Item</string>
+
+    //TextField Labels for Add and Modify Item Page
+    <string name="itemType">Item Type</string>
+    <string name="building">Building</string>
+    <string name="room">Room</string>
+    <string name="OS">OS</string>
+    <string name="brand">Brand</string>
+    <string name="lastScanned">Last Scanned</string>
     <string name="dateAdded">Date Added</string>
-    <string name="modifiedByText">Modified By</string>
-    <string name="typeText">Type</string>
+    <string name="modifiedBy">Modified By</string>
+    <array name="itemTypes">
+        <item>Computer</item>
+        <item>Printer</item>
+    </array>
+
+
 
 </resources>
