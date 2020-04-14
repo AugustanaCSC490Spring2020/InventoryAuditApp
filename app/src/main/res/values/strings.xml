@@ -16,4 +16,16 @@
     //About Page
     <string name="aboutPageTitle">About</string>
 
+    //Add Item Page
+    <string name="addItemTitle">Add Item</string>
+    <string name="itemText">Item</string>
+    <string name="buildingText">Building</string>
+    <string name="roomText">Room</string>
+    <string name="osText">OS</string>
+    <string name="brandText">Brand</string>
+    <string name="lastScannedText">Last Scanned</string>
+    <string name="dateAdded">Date Added</string>
+    <string name="modifiedByText">Modified By</string>
+    <string name="typeText">Type</string>
+
 </resources>
