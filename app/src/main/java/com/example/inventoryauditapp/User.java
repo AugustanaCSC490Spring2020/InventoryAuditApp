@@ -4,19 +4,15 @@ public class User {
 
     private String username;
     private String email;
-    private String password;  //encrypt this?
-    private String userType;  //what is a user type?
 
     public User(){
         //empty constructor required by Firebase
     }
 
     //constructor
-    public User(String username, String email, String password, String userType) {
+    public User(String username, String email) {
         this.username = username;
         this.email = email;
-        this.password = password;
-        this.userType = userType;
     }
 
     //getters
@@ -28,14 +24,6 @@ public class User {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
     //setters
     public void setUsername(String username) {
         this.username = username;
@@ -43,14 +31,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
     }
 
     @Override

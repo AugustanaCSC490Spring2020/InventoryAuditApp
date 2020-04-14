@@ -1,0 +1,305 @@
+{
+  "Old Main" : {
+    "1" : {
+      "Computer" : {
+        "111004" : {
+          "brand" : "Dell",
+          "building" : "Old Main",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 111004,
+          "lastScanned" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "os" : "Windows 10",
+          "roomNumber" : 1
+        },
+        "111005" : {
+          "brand" : "Dell",
+          "building" : "Old Main",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 111005,
+          "lastScanned" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "os" : "Windows 10",
+          "roomNumber" : 1
+        }
+      },
+      "Printer" : {
+        "211004" : {
+          "brand" : "HP",
+          "building" : "Old Main",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 211004,
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "roomNumber" : 1,
+          "type" : "Solid Ink Printer"
+        },
+        "211005" : {
+          "brand" : "HP",
+          "building" : "Old Main",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 211005,
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "roomNumber" : 1,
+          "type" : "Laser Printer"
+        }
+      }
+    },
+    "202" : {
+      "Computer" : {
+        "111001" : {
+          "brand" : "Dell",
+          "building" : "Old Main",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 111001,
+          "lastScanned" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "os" : "Windows 10",
+          "roomNumber" : 202
+        }
+      },
+      "Printer" : {
+        "211001" : {
+          "brand" : "HP",
+          "building" : "Old Main",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 211001,
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "roomNumber" : 202,
+          "type" : "Solid Ink Printer"
+        }
+      }
+    }
+  },
+  "Olin" : {
+    "201" : {
+      "Computer" : {
+        "111003" : {
+          "brand" : "Dell",
+          "building" : "Olin",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 111003,
+          "lastScanned" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "os" : "Windows 10",
+          "roomNumber" : 201
+        }
+      },
+      "Printer" : {
+        "211003" : {
+          "brand" : "HP",
+          "building" : "Olin",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 211003,
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "roomNumber" : 201,
+          "type" : "Solid Ink Printer"
+        }
+      }
+    },
+    "202" : {
+      "Computer" : {
+        "111002" : {
+          "brand" : "Dell",
+          "building" : "Olin",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 111002,
+          "lastScanned" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "os" : "Windows 10",
+          "roomNumber" : 202
+        }
+      },
+      "Printer" : {
+        "211002" : {
+          "brand" : "HP",
+          "building" : "Olin",
+          "dateAdded" : {
+            "date" : 1,
+            "day" : 0,
+            "hours" : 0,
+            "minutes" : 0,
+            "month" : 1,
+            "seconds" : 0,
+            "time" : 61538680800000,
+            "timezoneOffset" : 360,
+            "year" : 2020
+          },
+          "idNumber" : 211002,
+          "modifiedBy" : {
+            "email" : "dylanhart16@augustana.edu",
+            "username" : "dylanhart16"
+          },
+          "roomNumber" : 202,
+          "type" : "Solid Ink Printer"
+        }
+      }
+    }
+  }
+}
