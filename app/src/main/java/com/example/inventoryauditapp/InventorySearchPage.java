@@ -46,7 +46,6 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_inventory_search_page);
 
         initUI();
-
         changeActivity(searchButton, InventorySearchResultsPage.class);
         initSpinners();
         resetButton.setOnClickListener(this);

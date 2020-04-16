@@ -90,6 +90,7 @@ public class ModifyItemPage extends AppCompatActivity {
                     stringToDate(dateAddedEditText.getText().toString()),
                     user);
 
+            //TODO: Fix the bug that doesn't handle changing of rooms / bulidings properly
             ref.setValue(c);
         }
         else if(itemType.equals("Printer")){
@@ -102,6 +103,7 @@ public class ModifyItemPage extends AppCompatActivity {
                     stringToDate(dateAddedEditText.getText().toString()),
                     user);
 
+            //TODO: Fix the bug that doesn't handle changing of rooms / bulidings properly
             ref.setValue(p);
         }
         else{
