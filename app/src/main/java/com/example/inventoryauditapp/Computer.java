@@ -97,15 +97,6 @@ public class Computer {
 
     @Override
     public String toString() {
-        return "Computer{" +
-                "idNumber=" + idNumber +
-                ", building='" + building + '\'' +
-                ", roomNumber=" + roomNumber +
-                ", os='" + os + '\'' +
-                ", brand='" + brand + '\'' +
-                ", lastScanned=" + lastScanned +
-                ", dateAdded=" + dateAdded +
-                ", modifiedBy=" + modifiedBy +
-                '}';
+        return idNumber + " | " + os + " | " + brand;
     }
 }

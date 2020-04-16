@@ -95,6 +95,8 @@ public class Printer {
         this.modifiedBy = modifiedBy;
     }
 
+
+    //TODO: Change this to work with the listview display
     @Override
     public String toString() {
         return "Printer{" +

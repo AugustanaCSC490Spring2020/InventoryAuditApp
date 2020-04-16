@@ -21,13 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ModifyItemPage extends AppCompatActivity {
 
     //buttons at the bottom of the screen
     private Button submitButton;
-    private Button cancelButton;
 
     //id of the item being edited
     private TextView itemIDTextView;
@@ -59,8 +59,6 @@ public class ModifyItemPage extends AppCompatActivity {
         initUI();
         setComponentVisibility(); //Todo grab item type from other screen... ie Computer or Printer
         initializeTextFields();
-
-        changeActivity(cancelButton, InventorySearchResultsPage.class);
 
         //I know this is redundant now but will later need to call external method to store data
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +204,6 @@ public class ModifyItemPage extends AppCompatActivity {
 
     public void initUI(){
         submitButton        = findViewById(R.id.submitModifyButton);
-        cancelButton        = findViewById(R.id.cancelModifyButton);
         buildingEditText    = findViewById(R.id.buildingEditText);
         roomEditText        = findViewById(R.id.roomEditText);
         OSEditText          = findViewById(R.id.OSEditText);

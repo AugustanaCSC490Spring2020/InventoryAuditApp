@@ -172,6 +172,7 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                buildings.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     buildings.add(ds.getKey());
                 }
@@ -195,6 +196,7 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                rooms.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     rooms.add(ds.getKey());
                 }
