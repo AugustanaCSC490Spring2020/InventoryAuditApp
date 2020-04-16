@@ -9,12 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ModifyItemPage"></activity>
-        <activity android:name=".InventorySearchResultsPage" />
-        <activity android:name=".AboutPage" />
-        <activity android:name=".AuditSearchPage" />
-        <activity android:name=".InventorySearchPage" />
-        <activity android:name=".AddItemPage" />
+        <activity
+            android:name=".ModifyItemPage"
+            android:parentActivityName=".InventorySearchResultsPage"
+            />
+        <activity
+            android:name=".InventorySearchResultsPage"
+            android:parentActivityName=".InventorySearchPage"
+            />
+        <activity
+            android:name=".AboutPage"
+            android:parentActivityName=".HomePage"
+            />
+        <activity
+            android:name=".AuditSearchPage"
+            android:parentActivityName=".HomePage"
+            />
+        <activity
+            android:name=".InventorySearchPage"
+            android:parentActivityName=".HomePage"
+            />
+        <activity
+            android:name=".AddItemPage"
+            android:parentActivityName=".InventorySearchResultsPage"
+            />
         <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

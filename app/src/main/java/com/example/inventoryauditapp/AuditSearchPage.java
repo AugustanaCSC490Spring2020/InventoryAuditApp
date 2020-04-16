@@ -19,7 +19,7 @@ public class AuditSearchPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audit_search_page);
-        
+
         initUI();
     }
 
