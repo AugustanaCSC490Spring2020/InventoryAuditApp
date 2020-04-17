@@ -46,9 +46,10 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_audit_search_page);
 
         initUI();
-        //TODO: changeActivity(searchButton, AuditSearchResultsPage.class);
+        changeActivity(searchButton, AuditSearchResultsPage.class);
         initSpinners();
         resetButton.setOnClickListener(this);
+
     }
 
     /**

@@ -7,7 +7,6 @@
     <string name="submitButton">Submit</string>
     <string name="cancelButton">Cancel</string>
 
-
     //Home Page
     <string name="homePageTitle">Title</string>
     <string name="inventoryButton">Inventory</string>
@@ -28,6 +27,9 @@
     <string name="inventorySearchResultsTitle">Results</string>
     <string name="addItem">Add Item</string>
     <string name="modifyItem">Modify Item</string>
+
+    //Inventory Search Results Page
+    <string name="auditSearchResultsTitle">Results</string>
 
     //TextField Labels for Add and Modify Item Page
     <string name="itemID">Item ID</string>
