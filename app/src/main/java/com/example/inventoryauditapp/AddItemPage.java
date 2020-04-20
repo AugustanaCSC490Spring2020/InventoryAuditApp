@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,8 +22,10 @@ import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 public class AddItemPage extends AppCompatActivity {
 
@@ -46,9 +49,10 @@ public class AddItemPage extends AppCompatActivity {
     TextView osTextView;
     TextView lastScannedTextView;
 
-    //Setting Globals for the computer and printer IDs
-    Integer computerID;
-    Integer printerID;
+    //setting globals for data to be passed back to previous page
+    String itemTypeText;
+    String buildingText;
+    String roomText;
 
 
 
@@ -86,6 +90,9 @@ public class AddItemPage extends AppCompatActivity {
             public void onClick(View v) {
                 addItem();
                 Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
+                intent.putExtra("item", itemTypeText);
+                intent.putExtra("building", buildingText);
+                intent.putExtra("room", roomText);
                 startActivity(intent);
             }
         });
@@ -145,9 +152,9 @@ public class AddItemPage extends AppCompatActivity {
     //checks to see if all fields are entered and then submits item entry to the database
     public void addItem(){
         DatabaseReference ref;
-        String itemTypeText     = itemType.getSelectedItem().toString();
-        String buildingText     = buildingInput.getText().toString().trim();
-        String roomText         = roomInput.getText().toString().trim();
+        itemTypeText            = itemType.getSelectedItem().toString();
+        buildingText            = buildingInput.getText().toString().trim();
+        roomText                = roomInput.getText().toString().trim();
         String brandText        = brandInput.getText().toString().trim();
         String dateAdded        = dateAddedInput.getText().toString().trim();
         String modifiedByText   = modifiedByInput.getText().toString().trim();
@@ -157,16 +164,25 @@ public class AddItemPage extends AppCompatActivity {
         Date currentDate        = convertStringToDate(dateAdded);
         Integer computerRoom    = Integer.parseInt(roomText);
         User dummyUser          = new User("scottdaluga16","scottdaluga16@augustana.edu");
+        //String computerID       = getNextComputerIndex();
+        String computerID       = "111006";
+        String printerID        = "211006";
 
         if(!emptyText(itemTypeText,buildingText,roomText,brandText,dateAdded,modifiedByText,osText,lastScannedText)){
-            Date lastScannedDate = convertStringToDate(lastScannedText);
             if(itemTypeText.equals("Computer")){
-                ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child("111008");
-                Computer computer = new Computer(111008,buildingText,computerRoom,osText,brandText,lastScannedDate,currentDate,dummyUser);
+                Date lastScannedDate = convertStringToDate(lastScannedText);
+                ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child(computerID);
+                Computer computer = new Computer(Integer.parseInt(computerID),buildingText,computerRoom,osText,brandText,lastScannedDate,currentDate,dummyUser);
                 ref.setValue(computer);
                 Toast.makeText(this,"Successfully added Computer", Toast.LENGTH_LONG).show();
+            }else if(itemTypeText.equals("Printer")){
+                ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child(printerID);
+                //public Printer(int idNumber, String building, int roomNumber, String brand, Date dateAdded, User modifiedBy)
+                Printer printer = new Printer(211006,buildingText,computerRoom,brandText,currentDate,dummyUser);
+                ref.setValue(printer);
+                Toast.makeText(this,"Successfully added Printer", Toast.LENGTH_LONG).show();
             }
-
+                //if we add another item type;
         }else{
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_LONG).show();
         }
