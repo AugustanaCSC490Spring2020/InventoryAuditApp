@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -54,12 +55,22 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         item = getIntent().getStringExtra("item");
         computers = new ArrayList<>();
         getComputerIDs();
+
+        //ListView
+        resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getBaseContext(), ModifyItemPage.class);
+                startActivity(i);
+            }
+        });
     }
 
     public void initIU(){
         addItemButton    = findViewById(R.id.addItemButton);
         modifyItemButton = findViewById(R.id.modifyItemButton);
         resultsListView  = findViewById(R.id.resultsListView);
+        modifyItemButton.setVisibility(View.INVISIBLE);
     }
 
     /**
