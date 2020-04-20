@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class InventorySearchResultsPage extends AppCompatActivity {
 
     private Button addItemButton;
-    private Button modifyItemButton;
 
     private ListView resultsListView;
 
@@ -48,8 +47,6 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         //Add Item Button
         changeActivity(addItemButton, AddItemPage.class);
 
-        //Modify Item Button
-        changeActivity(modifyItemButton,ModifyItemPage.class);
         building = getIntent().getStringExtra("building");
         room = getIntent().getStringExtra("room");
         item = getIntent().getStringExtra("item");
@@ -68,9 +65,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
 
     public void initIU(){
         addItemButton    = findViewById(R.id.addItemButton);
-        modifyItemButton = findViewById(R.id.modifyItemButton);
         resultsListView  = findViewById(R.id.resultsListView);
-        modifyItemButton.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -122,7 +117,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                //TODO:
                 Computer c = dataSnapshot.getValue(Computer.class);
                 computers.add(c.toString());
                 resultAdapter = new ArrayAdapter<>(InventorySearchResultsPage.this, android.R.layout.simple_list_item_1, computers);

@@ -34,11 +34,12 @@
         android:id="@+id/resultsListView"
         android:layout_width="409dp"
         android:layout_height="533dp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="132dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inventorySearchResults"
+        app:layout_constraintTop_toBottomOf="@+id/auditSearchResults"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView

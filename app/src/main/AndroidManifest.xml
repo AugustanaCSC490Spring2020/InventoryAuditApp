@@ -13,7 +13,7 @@
             android:name=".AuditSearchResultsPage"
             android:parentActivityName=".AuditSearchPage" />
         <activity
-            android:name=".ModifyItemPage"
+            android:name=".ModifyItemPage"/>
             android:parentActivityName=".InventorySearchResultsPage" />
         <activity
             android:name=".InventorySearchResultsPage"
@@ -28,7 +28,7 @@
             android:name=".InventorySearchPage"
             android:parentActivityName=".HomePage" />
         <activity
-            android:name=".AddItemPage"
+            android:name=".AddItemPage"/>
             android:parentActivityName=".InventorySearchResultsPage" />
         <activity android:name=".HomePage">
             <intent-filter>

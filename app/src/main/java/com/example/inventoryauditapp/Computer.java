@@ -97,6 +97,6 @@ public class Computer {
 
     @Override
     public String toString() {
-        return idNumber + " | " + os + " | " + brand;
+        return idNumber + " | " + brand;
     }
 }
