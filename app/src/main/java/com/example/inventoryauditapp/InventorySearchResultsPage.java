@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,8 +34,6 @@ public class InventorySearchResultsPage extends AppCompatActivity {
     private String room;
     private String item;
 
-    //todo : implement a checkbox widget
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +48,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         room = getIntent().getStringExtra("room");
         item = getIntent().getStringExtra("item");
         computers = new ArrayList<>();
-        getComputerIDs();
+        retrieveAndDiplayComputers();
 
         //ListView
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,38 +85,19 @@ public class InventorySearchResultsPage extends AppCompatActivity {
      * Method used to get all valid computer IDs of the current item type (will work for printers sorta for now)
      * and calls getComputerInfo based on the current computerID
      */
-    private void getComputerIDs() {
+    private void retrieveAndDiplayComputers() {
         //TODO: Make this work with printers properly
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(building).child(room).child(item);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(item);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 computers.clear();
                 for(DataSnapshot d: dataSnapshot.getChildren()) {
-                    getComputerInfo(d.getKey());
+                    Computer c = d.getValue(Computer.class);
+                    if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
+                        computers.add(c.toString());
+                    }
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    /**
-     * Method used to get all computers based on the current building, room, and item type
-     * @param ID - String of the current computer (or printer ID) from the DB
-     */
-    private void getComputerInfo(String ID) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(building).child(room).child(item).child(ID);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //TODO:
-                Computer c = dataSnapshot.getValue(Computer.class);
-                computers.add(c.toString());
                 resultAdapter = new ArrayAdapter<>(InventorySearchResultsPage.this, android.R.layout.simple_list_item_1, computers);
                 resultsListView.setAdapter(resultAdapter);
             }
@@ -129,5 +107,6 @@ public class InventorySearchResultsPage extends AppCompatActivity {
 
             }
         });
+
     }
 }

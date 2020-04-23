@@ -150,6 +150,8 @@ public class AddItemPage extends AppCompatActivity {
     }
 
     //checks to see if all fields are entered and then submits item entry to the database
+    //TODO: Use new DB structure and see discord for the replacement of using the Date field and instead
+    // use the Calendar class pm Dylan for more info
     public void addItem(){
         DatabaseReference ref;
         itemTypeText            = itemType.getSelectedItem().toString();
@@ -172,14 +174,16 @@ public class AddItemPage extends AppCompatActivity {
             if(itemTypeText.equals("Computer")){
                 Date lastScannedDate = convertStringToDate(lastScannedText);
                 ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child(computerID);
-                Computer computer = new Computer(Integer.parseInt(computerID),buildingText,computerRoom,osText,brandText,lastScannedDate,currentDate,dummyUser);
-                ref.setValue(computer);
+                //TODO: Constructors changed to use the Calendar class and make it a string to store the date, pm Dylan For more info
+                //Computer computer = new Computer(Integer.parseInt(computerID),buildingText,computerRoom,osText,brandText,lastScannedDate,currentDate,dummyUser);
+                //ref.setValue(computer);
                 Toast.makeText(this,"Successfully added Computer", Toast.LENGTH_LONG).show();
             }else if(itemTypeText.equals("Printer")){
                 ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child(printerID);
+                //TODO: Constructors changed to use the Calendar class and make it a string to store the date, pm Dylan For more info
                 //public Printer(int idNumber, String building, int roomNumber, String brand, Date dateAdded, User modifiedBy)
-                Printer printer = new Printer(211006,buildingText,computerRoom,brandText,currentDate,dummyUser);
-                ref.setValue(printer);
+//                Printer printer = new Printer(211006,buildingText,computerRoom,brandText,currentDate,dummyUser);
+//                ref.setValue(printer);
                 Toast.makeText(this,"Successfully added Printer", Toast.LENGTH_LONG).show();
             }
                 //if we add another item type;
@@ -219,6 +223,7 @@ public class AddItemPage extends AppCompatActivity {
      * @param s the date as a String formatted "mm/dd/yyyy"
      * @return a Date object that has been converted from a String
      */
+    //TODO: May no longer need this if we do not require the user to input date data in the app, pm Dylan for more info
     public Date convertStringToDate(String s){
         String[] a = s.split("/");
         int month = Integer.parseInt(a[0]);

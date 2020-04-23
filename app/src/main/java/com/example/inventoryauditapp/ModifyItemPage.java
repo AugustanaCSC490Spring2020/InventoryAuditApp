@@ -7,12 +7,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,8 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class ModifyItemPage extends AppCompatActivity {
@@ -46,6 +41,7 @@ public class ModifyItemPage extends AppCompatActivity {
     private TextView lastScannedTextView;
 
     //some hard coded data references for testing
+    //TODO: Remove hard coded stuff eventually
     String buildingNum = "Old Main";
     String roomNum = "1";
     String itemType = "Computer"; //hard coded for now.  Will be dynamic later
@@ -74,35 +70,32 @@ public class ModifyItemPage extends AppCompatActivity {
      * Updates database with the new information in the text fields entered by the user
      */
     public void updateDatebase(){
+        // TODO: Update this to reflect DB changes
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(buildingNum).child(roomNum).child(itemType).child(id);
-        User user = new User(modifiedByEditText.getText().toString());
         if(itemType.equals("Computer")){
-            Computer c;
-            c = new Computer(
-                    Integer.parseInt(id),
-                    buildingEditText.getText().toString(),
-                    Integer.parseInt(roomEditText.getText().toString()),
-                    OSEditText.getText().toString(),
-                    brandEditText.getText().toString(),
-                    stringToDate(lastScannedEditText.getText().toString()),
-                    stringToDate(dateAddedEditText.getText().toString()),
-                    user);
-
-            //TODO: Fix the bug that doesn't handle changing of rooms / bulidings properly
-            ref.setValue(c);
+//            Computer c;
+//            c = new Computer(
+//                    Integer.parseInt(id),
+//                    buildingEditText.getText().toString(),
+//                    Integer.parseInt(roomEditText.getText().toString()),
+//                    OSEditText.getText().toString(),
+//                    brandEditText.getText().toString(),
+//                    stringToDate(lastScannedEditText.getText().toString()),
+//                    stringToDate(dateAddedEditText.getText().toString()),
+//                    new User(modifiedByEditText.getText().toString()));
+            //ref.setValue(c);
         }
         else if(itemType.equals("Printer")){
             Printer p;
-            p = new Printer(
-                    Integer.parseInt(id),
-                    buildingEditText.getText().toString(),
-                    Integer.parseInt(roomEditText.getText().toString()),
-                    brandEditText.getText().toString(),
-                    stringToDate(dateAddedEditText.getText().toString()),
-                    user);
-
-            //TODO: Fix the bug that doesn't handle changing of rooms / bulidings properly
-            ref.setValue(p);
+//            p = new Printer(
+//                    Integer.parseInt(id),
+//                    buildingEditText.getText().toString(),
+//                    Integer.parseInt(roomEditText.getText().toString()),
+//                    brandEditText.getText().toString(),
+//                    stringToDate(dateAddedEditText.getText().toString()),
+//                    new User(modifiedByEditText.getText().toString()));
+//
+//            ref.setValue(p);
         }
         else{
             //could just be an if - else statement but leaving room for more items being added
@@ -120,22 +113,25 @@ public class ModifyItemPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(itemType.equals("Computer")){
                     Computer c = dataSnapshot.getValue(Computer.class);
-                    itemIDTextView.setText(c.getIdNumber()+"");
+                    itemIDTextView.setText(c.getSerialNumber()+"");
                     buildingEditText.setText(c.getBuilding());
                     roomEditText.setText(c.getRoomNumber()+"");
                     brandEditText.setText(c.getBrand());
-                    dateAddedEditText.setText(c.getDateAdded().getMonth() + "/" + c.getDateAdded().getDate() + "/" + c.getDateAdded().getYear());
+                    //TODO: Use Calendar class in order to set dates (see discord general chat for usage)
+                    //dateAddedEditText.setText(c.getDateAdded().getMonth() + "/" + c.getDateAdded().getDate() + "/" + c.getDateAdded().getYear());
                     modifiedByEditText.setText(c.getModifiedBy().toString());
                     OSEditText.setText(c.getOs());
-                    lastScannedEditText.setText(c.getLastScanned().getMonth() + "/" + c.getLastScanned().getDate() + "/" + c.getLastScanned().getYear());
+                    //TODO: Use Calendar class in order to set dates (see discord general chat for usage)
+                    //lastScannedEditText.setText(c.getLastScanned().getMonth() + "/" + c.getLastScanned().getDate() + "/" + c.getLastScanned().getYear());
                 }
                 else if (itemType.equals("Printer")){
                     Printer p = dataSnapshot.getValue(Printer.class);
-                    itemIDTextView.setText(p.getIdNumber());
+                    itemIDTextView.setText(p.getSerialNumber());
                     buildingEditText.setText(p.getBuilding());
                     roomEditText.setText(p.getRoomNumber());
                     brandEditText.setText(p.getBrand());
-                    dateAddedEditText.setText(p.getDateAdded().getMonth() + "/" + p.getDateAdded().getDate() + "/" + p.getDateAdded().getYear());
+                    //TODO: Use Calendar class in order to set dates (see discord general chat for usage)
+//                    dateAddedEditText.setText(p.getDateAdded().getMonth() + "/" + p.getDateAdded().getDate() + "/" + p.getDateAdded().getYear());
                     modifiedByEditText.setText(p.getModifiedBy().toString());
                 }
                 else{
@@ -156,6 +152,7 @@ public class ModifyItemPage extends AppCompatActivity {
      * @param s the date as a String formatted "mm/dd/yyyy"
      * @return a Date object that has been converted from a String
      */
+    //TODO: May no longer need this method if we go with the idea of not requiring the user to enter dates
     public Date stringToDate(String s){
         String[] a = s.split("/");
         int month = Integer.parseInt(a[0]);

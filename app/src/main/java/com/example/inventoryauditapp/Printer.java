@@ -1,15 +1,13 @@
 package com.example.inventoryauditapp;
 
-import java.util.Date;
-
 public class Printer {
 
-    private int idNumber;
+    private String serialNumber;
     private String building;
     private int roomNumber;
     private String type;
     private String brand;
-    private Date dateAdded;
+    private String dateAdded;
     private User modifiedBy;
 
     public Printer() {
@@ -17,8 +15,8 @@ public class Printer {
     }
 
     // constructor
-    public Printer(int idNumber, String building, int roomNumber, String type, String brand, Date dateAdded, User modifiedBy) {
-        this.idNumber = idNumber;
+    public Printer(String serialNumber, String building, int roomNumber, String type, String brand, String dateAdded, User modifiedBy) {
+        this.serialNumber = serialNumber;
         this.building = building;
         this.roomNumber = roomNumber;
         this.type = type;
@@ -27,24 +25,14 @@ public class Printer {
         this.modifiedBy = modifiedBy;
     }
 
-    // alternate constructor with no type
-    public Printer(int idNumber, String building, int roomNumber, String brand, Date dateAdded, User modifiedBy) {
-        this.idNumber = idNumber;
-        this.building = building;
-        this.roomNumber = roomNumber;
-        this.type = "";
-        this.brand = brand;
-        this.dateAdded = dateAdded;
-        this.modifiedBy = modifiedBy;
-    }
 
     //getters and setters for all fields
-    public int getIdNumber() {
-        return idNumber;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setIdNumber(int idNumber) {
-        this.idNumber = idNumber;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public String getBuilding() {
@@ -79,11 +67,11 @@ public class Printer {
         this.brand = brand;
     }
 
-    public Date getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
 
@@ -100,7 +88,7 @@ public class Printer {
     @Override
     public String toString() {
         return "Printer{" +
-                "idNumber=" + idNumber +
+                "serialNumber=" + serialNumber +
                 ", building='" + building + '\'' +
                 ", roomNumber=" + roomNumber +
                 ", type='" + type + '\'' +

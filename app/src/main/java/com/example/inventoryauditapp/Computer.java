@@ -1,16 +1,17 @@
 package com.example.inventoryauditapp;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Computer {
 
-    private int idNumber;
+    private String serialNumber;
     private String building;
     private int roomNumber;
     private String os;
     private String brand;
-    private Date lastScanned;
-    private Date dateAdded;
+    private String lastScanned;
+    private String dateAdded;
     private User modifiedBy;
 
     public Computer(){
@@ -18,8 +19,8 @@ public class Computer {
     }
 
     //constructor
-    public Computer(int idNumber, String building, int roomNumber, String os, String brand, Date lastScanned, Date dateAdded, User modifiedBy) {
-        this.idNumber = idNumber;
+    public Computer(String serialNumber, String building, int roomNumber, String os, String brand,  String lastScanned, String dateAdded, User modifiedBy) {
+        this.serialNumber = serialNumber;
         this.building = building;
         this.roomNumber = roomNumber;
         this.os = os;
@@ -31,12 +32,12 @@ public class Computer {
 
 
     //getters and setters for all fields
-    public int getIdNumber() {
-        return idNumber;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setIdNumber(int idNumber) {
-        this.idNumber = idNumber;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public String getBuilding() {
@@ -71,19 +72,19 @@ public class Computer {
         this.brand = brand;
     }
 
-    public Date getLastScanned() {
+    public String getLastScanned() {
         return lastScanned;
     }
 
-    public void setLastScanned(Date lastScanned) {
+    public void setLastScanned(String lastScanned) {
         this.lastScanned = lastScanned;
     }
 
-    public Date getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
 
@@ -97,6 +98,6 @@ public class Computer {
 
     @Override
     public String toString() {
-        return idNumber + " | " + brand;
+        return serialNumber + " | " + brand;
     }
 }
