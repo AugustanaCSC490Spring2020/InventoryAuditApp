@@ -28,7 +28,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
 
     private ArrayAdapter<String> resultAdapter;
 
-    private ArrayList<String> computers;
+    private ArrayList<String> items;
 
     private String building;
     private String room;
@@ -47,8 +47,9 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         building = getIntent().getStringExtra("building");
         room = getIntent().getStringExtra("room");
         item = getIntent().getStringExtra("item");
-        computers = new ArrayList<>();
-        retrieveAndDiplayComputers();
+
+        items = new ArrayList<>();
+        retrieveAndDisplayItems();
 
         //ListView
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,20 +86,29 @@ public class InventorySearchResultsPage extends AppCompatActivity {
      * Method used to get all valid computer IDs of the current item type (will work for printers sorta for now)
      * and calls getComputerInfo based on the current computerID
      */
-    private void retrieveAndDiplayComputers() {
-        //TODO: Make this work with printers properly
+    private void retrieveAndDisplayItems() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(item);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                computers.clear();
+                //Firebase
                 for(DataSnapshot d: dataSnapshot.getChildren()) {
-                    Computer c = d.getValue(Computer.class);
-                    if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
-                        computers.add(c.toString());
+                    //Items are Computers
+                    if(dataSnapshot.getKey() == "Computer"){
+                        Computer c = d.getValue(Computer.class);
+                        if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
+                            items.add(c.toString());
+                        }
+                    //Items are Printers
+                    } else if(dataSnapshot.getKey() == "Printer"){
+                        Printer c = d.getValue(Printer.class);
+                        if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
+                            items.add(c.toString());
+                        }
                     }
                 }
-                resultAdapter = new ArrayAdapter<>(InventorySearchResultsPage.this, android.R.layout.simple_list_item_1, computers);
+                //ListView Setup
+                resultAdapter = new ArrayAdapter<>(InventorySearchResultsPage.this, android.R.layout.simple_list_item_1, items);
                 resultsListView.setAdapter(resultAdapter);
             }
 
@@ -107,6 +117,5 @@ public class InventorySearchResultsPage extends AppCompatActivity {
 
             }
         });
-
     }
 }

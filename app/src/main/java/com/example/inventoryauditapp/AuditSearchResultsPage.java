@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,7 +29,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
 
     private ArrayAdapter<String> resultAdapter;
 
-    private ArrayList<String> computers;
+    private ArrayList<String> items;
 
     private String building;
     private String room;
@@ -51,9 +52,9 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         room     = getIntent().getStringExtra("room");
         item     = getIntent().getStringExtra("item");
 
-        computers = new ArrayList<>();
+        items = new ArrayList<>();
 
-        getComputerIDs();
+        retrieveAndDisplayItems();
     }
 
     private void initUI() {
@@ -78,44 +79,33 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         });
     }
 
-
     /**
      * Method used to get all valid computer IDs of the current item type (will work for printers sorta for now)
      * and calls getComputerInfo based on the current computerID
      */
-    private void getComputerIDs() {
-        //TODO: Make this work with printers properly
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(building).child(room).child(item);
+    private void retrieveAndDisplayItems() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(item);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                computers.clear();
+                //Firebase
                 for(DataSnapshot d: dataSnapshot.getChildren()) {
-                    getComputerInfo(d.getKey());
+                    //Items are Computers
+                    if(dataSnapshot.getKey() == "Computer"){
+                        Computer c = d.getValue(Computer.class);
+                        if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
+                            items.add(c.toString());
+                        }
+                        //Items are Printers
+                    } else if(dataSnapshot.getKey() == "Printer"){
+                        Printer c = d.getValue(Printer.class);
+                        if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
+                            items.add(c.toString());
+                        }
+                    }
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    /**
-     * Method used to get all computers based on the current building, room, and item type
-     * @param ID - String of the current computer (or printer ID) from the DB
-     */
-    private void getComputerInfo(String ID) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(building).child(room).child(item).child(ID);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Computer c = dataSnapshot.getValue(Computer.class);
-                computers.add(c.toString());
-                resultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, computers);
+                //ListView Setup
+                resultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, items);
                 resultsListView.setAdapter(resultAdapter);
             }
 

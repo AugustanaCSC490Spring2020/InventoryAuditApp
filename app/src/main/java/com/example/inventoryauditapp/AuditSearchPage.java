@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AuditSearchPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -168,12 +170,18 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
      * list has all buildings.
      */
     private void getBuildings() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(currentItem);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Set<String> s = new HashSet<>();
+                buildings.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    buildings.add(ds.getKey());
+                    Computer c = ds.getValue(Computer.class);
+                    if(!s.contains(c.getBuilding())) {
+                        s.add(c.getBuilding());
+                        buildings.add(c.getBuilding());
+                    }
                 }
                 handleBuildingSpinner();
             }
@@ -191,12 +199,18 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
      * rooms.
      */
     private void getRooms() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(currentBuilding);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(currentItem);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Set<Integer> s = new HashSet<>();
+                rooms.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    rooms.add(ds.getKey());
+                    Computer c = ds.getValue(Computer.class);
+                    if(c.getBuilding().equalsIgnoreCase(currentBuilding) && !s.contains(c.getRoomNumber())) {
+                        s.add(c.getRoomNumber());
+                        rooms.add(String.valueOf(c.getRoomNumber()));
+                    }
                 }
                 handleRoomSpinner();
             }
