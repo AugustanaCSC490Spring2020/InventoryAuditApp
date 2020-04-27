@@ -35,6 +35,7 @@ public class AddItemPage extends AppCompatActivity {
 
     //Initialize Spinner
     Spinner itemType;
+    Spinner printerType;
 
     //Initialize EditText
     EditText buildingInput;
@@ -44,10 +45,11 @@ public class AddItemPage extends AppCompatActivity {
     EditText lastScannedInput;
     EditText dateAddedInput;
     EditText modifiedByInput;
+    EditText serialNumberInput;
 
     //Initialize TextView
     TextView osTextView;
-    TextView lastScannedTextView;
+    TextView printerTextView;
 
     //setting globals for data to be passed back to previous page
     String itemTypeText;
@@ -64,9 +66,6 @@ public class AddItemPage extends AppCompatActivity {
         setContentView(R.layout.activity_add_item_page);
 
         initUI();
-
-        //Submit Button
-        //changeActivity(submit, InventorySearchResultsPage.class);
 
         //Cancel Button
         changeActivity(cancel, InventorySearchResultsPage.class);
@@ -108,11 +107,11 @@ public class AddItemPage extends AppCompatActivity {
         roomInput           = findViewById(R.id.roomInput);
         osInput             = findViewById(R.id.osInput);
         brandInput          = findViewById(R.id.brandInput);
-        lastScannedInput    = findViewById(R.id.lastScannedInput);
-        dateAddedInput      = findViewById(R.id.dateAddedInput);
         modifiedByInput     = findViewById(R.id.modifiedInput);
         osTextView          = findViewById(R.id.OSText);
-        lastScannedTextView = findViewById(R.id.lastScannedText);
+        printerTextView     = findViewById(R.id.typeText);
+        printerType         = findViewById(R.id.printerTypeSpinner);
+        serialNumberInput   = findViewById(R.id.serialNumberInput);
     }
 
     /**
@@ -138,14 +137,14 @@ public class AddItemPage extends AppCompatActivity {
         if(itemTypeText.equals("Computer")){
             osTextView.setVisibility(View.VISIBLE);
             osInput.setVisibility(View.VISIBLE);
-            lastScannedTextView.setVisibility(View.VISIBLE);
-            lastScannedInput.setVisibility(View.VISIBLE);
+            printerTextView.setVisibility(View.INVISIBLE);
+            printerType.setVisibility(View.GONE);
         }
         else if(itemTypeText.equals("Printer")){
             osTextView.setVisibility(View.INVISIBLE);
             osInput.setVisibility(View.INVISIBLE);
-            lastScannedTextView.setVisibility(View.INVISIBLE);
-            lastScannedInput.setVisibility(View.INVISIBLE);
+            printerTextView.setVisibility(View.VISIBLE);
+            printerType.setVisibility(View.VISIBLE);
         }
     }
 
@@ -154,36 +153,29 @@ public class AddItemPage extends AppCompatActivity {
     // use the Calendar class pm Dylan for more info
     public void addItem(){
         DatabaseReference ref;
+        String serialNumberText = serialNumberInput.getText().toString();
         itemTypeText            = itemType.getSelectedItem().toString();
         buildingText            = buildingInput.getText().toString().trim();
         roomText                = roomInput.getText().toString().trim();
         String brandText        = brandInput.getText().toString().trim();
-        String dateAdded        = dateAddedInput.getText().toString().trim();
         String modifiedByText   = modifiedByInput.getText().toString().trim();
         String osText           = osInput.getText().toString().trim();
-        String lastScannedText  = lastScannedInput.getText().toString().trim();
-        //Date currentDate        = Calendar.getInstance().getTime();
-        Date currentDate        = convertStringToDate(dateAdded);
+        String currentDate      = Calendar.getInstance().getTime().toString();
         Integer computerRoom    = Integer.parseInt(roomText);
+        String printerTypeText  = printerType.getSelectedItem().toString();
         User dummyUser          = new User("scottdaluga16","scottdaluga16@augustana.edu");
-        //String computerID       = getNextComputerIndex();
-        String computerID       = "111006";
-        String printerID        = "211006";
 
-        if(!emptyText(itemTypeText,buildingText,roomText,brandText,dateAdded,modifiedByText,osText,lastScannedText)){
+
+        if(!emptyText(itemTypeText,buildingText,roomText,brandText,modifiedByText,osText,serialNumberText)){
             if(itemTypeText.equals("Computer")){
-                Date lastScannedDate = convertStringToDate(lastScannedText);
-                ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child(computerID);
-                //TODO: Constructors changed to use the Calendar class and make it a string to store the date, pm Dylan For more info
-                //Computer computer = new Computer(Integer.parseInt(computerID),buildingText,computerRoom,osText,brandText,lastScannedDate,currentDate,dummyUser);
-                //ref.setValue(computer);
+                ref = FirebaseDatabase.getInstance().getReference("Computer").child(serialNumberText);
+                Computer computer = new Computer(serialNumberText,buildingText,computerRoom,osText,brandText,currentDate,currentDate,dummyUser);
+                ref.setValue(computer);
                 Toast.makeText(this,"Successfully added Computer", Toast.LENGTH_LONG).show();
             }else if(itemTypeText.equals("Printer")){
-                ref = FirebaseDatabase.getInstance().getReference(buildingText).child(roomText).child(itemTypeText).child(printerID);
-                //TODO: Constructors changed to use the Calendar class and make it a string to store the date, pm Dylan For more info
-                //public Printer(int idNumber, String building, int roomNumber, String brand, Date dateAdded, User modifiedBy)
-//                Printer printer = new Printer(211006,buildingText,computerRoom,brandText,currentDate,dummyUser);
-//                ref.setValue(printer);
+                ref = FirebaseDatabase.getInstance().getReference("Printer").child(serialNumberText);
+                Printer printer = new Printer(serialNumberText,buildingText,computerRoom,printerTypeText,brandText,currentDate,dummyUser);
+                ref.setValue(printer);
                 Toast.makeText(this,"Successfully added Printer", Toast.LENGTH_LONG).show();
             }
                 //if we add another item type;
@@ -194,21 +186,19 @@ public class AddItemPage extends AppCompatActivity {
     }
 
     //helper method to check if any inputted text is empty;
-    private boolean emptyText(String itemType, String building,String room,String brand, String date, String modifiedBy,String os, String lastScanned){
-        if(TextUtils.isEmpty(building)){
+    private boolean emptyText(String itemType, String building,String room,String brand, String modifiedBy,String os, String serialNumber){
+        if(TextUtils.isEmpty(serialNumber)){
+            return true;
+        }else if(TextUtils.isEmpty(building)){
             return true;
         }else if(TextUtils.isEmpty(room)){
             return true;
-        }else if(TextUtils.isEmpty(brand)){
-            return true;
-        }else if(TextUtils.isEmpty(date)){
+        }else if(TextUtils.isEmpty(brand)) {
             return true;
         }else if(TextUtils.isEmpty(modifiedBy)){
             return true;
         }else if(itemType.equals("Computer")){
             if(TextUtils.isEmpty(os)){
-                return true;
-            }else if(TextUtils.isEmpty(lastScanned)){
                 return true;
             }else{
                 return false;
@@ -217,19 +207,5 @@ public class AddItemPage extends AppCompatActivity {
             return false;
         }
     }
-    /**
-     * This method takes in a date as a string and converts it to a Date object
-     *
-     * @param s the date as a String formatted "mm/dd/yyyy"
-     * @return a Date object that has been converted from a String
-     */
-    //TODO: May no longer need this if we do not require the user to input date data in the app, pm Dylan for more info
-    public Date convertStringToDate(String s){
-        String[] a = s.split("/");
-        int month = Integer.parseInt(a[0]);
-        int day = Integer.parseInt(a[1]);
-        int year = Integer.parseInt(a[2]);
-        Date date = new Date(year, month, day);
-        return date;
-    }
+
 }

@@ -48,5 +48,11 @@
     //Add Items Page
     <string name="item">Item</string>
     <string name="type">Type</string>
+    <string name="serialNumber">Serial Number</string>
+    <string name="printerType">Printer Type</string>
+    <array name="printerTypes">
+        <item>Laser</item>
+        <item>Ink</item>
+    </array>
 
 </resources>
