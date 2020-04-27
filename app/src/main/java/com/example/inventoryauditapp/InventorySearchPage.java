@@ -54,7 +54,7 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
         handleItemSpinner();
         resetButton.setOnClickListener(this);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Computer");
+        /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Computer");
         Computer c = new Computer("O2D489", "Olin", 200, "Windows 10", "Dell",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
         ref.child(c.getSerialNumber()).setValue(c);
 
@@ -85,6 +85,7 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
 
         Printer t = new Printer("E2IL287", "Evald", 200, "Ink", "HP", Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
         ref2.child(t.getSerialNumber()).setValue(t);
+        */
 
 
     }

@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import javax.crypto.AEADBadTagException;
+
 public class InventorySearchResultsPage extends AppCompatActivity {
 
     private Button addItemButton;
@@ -29,6 +31,8 @@ public class InventorySearchResultsPage extends AppCompatActivity {
     private ArrayAdapter<String> resultAdapter;
 
     private ArrayList<String> items;
+
+    ArrayList<String> serialNums;
 
     private String building;
     private String room;
@@ -49,6 +53,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         item = getIntent().getStringExtra("item");
 
         items = new ArrayList<>();
+        serialNums = new ArrayList<>();
         retrieveAndDisplayItems();
 
         //ListView
@@ -56,6 +61,8 @@ public class InventorySearchResultsPage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getBaseContext(), ModifyItemPage.class);
+                i.putExtra("itemType", item);
+                i.putExtra("serialNum", serialNums.get(position));
                 startActivity(i);
             }
         });
@@ -98,12 +105,14 @@ public class InventorySearchResultsPage extends AppCompatActivity {
                         Computer c = d.getValue(Computer.class);
                         if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
                             items.add(c.toString());
+                            serialNums.add(c.getSerialNumber());
                         }
                     //Items are Printers
                     } else if(dataSnapshot.getKey() == "Printer"){
                         Printer c = d.getValue(Printer.class);
                         if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
                             items.add(c.toString());
+                            serialNums.add(c.getSerialNumber());
                         }
                     }
                 }

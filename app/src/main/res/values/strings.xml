@@ -32,12 +32,12 @@
     <string name="auditSearchResultsTitle">Results</string>
 
     //TextField Labels for Add and Modify Item Page
-    <string name="itemID">Item ID</string>
+    <string name="itemID">Serial Num</string>
     <string name="building">Building</string>
     <string name="room">Room</string>
     <string name="OS">OS</string>
     <string name="brand">Brand</string>
-    <string name="lastScanned">Last Scanned</string>
+    <string name="lastScanned">Last Modified</string>
     <string name="dateAdded">Date Added</string>
     <string name="modifiedBy">Modified By</string>
     <array name="itemTypes">
