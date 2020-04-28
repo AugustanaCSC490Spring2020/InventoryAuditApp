@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,10 @@ public class ModifyItemPage extends AppCompatActivity {
     private EditText OSEditText;
     private EditText brandEditText;
     private EditText modifiedByEditText;
+
+    //fields to appear only when a printer is selected
+    private TextView printerTypeTextView;
+    private Spinner printerTypeSpinner;
 
     //text labels of OS
     private TextView OSTextView;
@@ -94,7 +99,7 @@ public class ModifyItemPage extends AppCompatActivity {
                     serialNum,
                     buildingEditText.getText().toString(),
                     Integer.parseInt(roomEditText.getText().toString()),
-                    "", //Todo: remove type from Printer class
+                    printerTypeSpinner.getSelectedItem().toString(),
                     brandEditText.getText().toString(),
                     dateAddedDisplayTextView.getText().toString(),
                     new User(modifiedByEditText.getText().toString()));
@@ -157,12 +162,16 @@ public class ModifyItemPage extends AppCompatActivity {
             OSEditText.setVisibility(View.VISIBLE);
             lastScannedTextView.setVisibility(View.VISIBLE);
             lastModifiedDisplayTextView.setVisibility(View.VISIBLE);
+            printerTypeTextView.setVisibility(View.INVISIBLE);
+            printerTypeSpinner.setVisibility(View.INVISIBLE);
         }
         else if(itemType.equals("Printer")){
             OSTextView.setVisibility(View.INVISIBLE);
             OSEditText.setVisibility(View.INVISIBLE);
             lastScannedTextView.setVisibility(View.INVISIBLE);
             lastModifiedDisplayTextView.setVisibility(View.INVISIBLE);
+            printerTypeTextView.setVisibility(View.VISIBLE);
+            printerTypeSpinner.setVisibility(View.VISIBLE);
         }
         else{
             //could just be an if - else statement but leaving room for more items being added
@@ -197,5 +206,7 @@ public class ModifyItemPage extends AppCompatActivity {
         OSTextView                  = findViewById(R.id.OSTextView);
         itemIDTextView              = findViewById(R.id.itemIDTextView);
         lastScannedTextView         = findViewById(R.id.lastScannedTextView);
+        printerTypeSpinner          = findViewById(R.id.printerTypeSpinner);
+        printerTypeTextView         = findViewById(R.id.printerTypeTextView);
     }
 }
