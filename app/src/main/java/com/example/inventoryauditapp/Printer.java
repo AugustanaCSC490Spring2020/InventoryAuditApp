@@ -87,14 +87,6 @@ public class Printer {
     //TODO: Change this to work with the listview display
     @Override
     public String toString() {
-        return "Printer{" +
-                "serialNumber=" + serialNumber +
-                ", building='" + building + '\'' +
-                ", roomNumber=" + roomNumber +
-                ", type='" + type + '\'' +
-                ", brand='" + brand + '\'' +
-                ", dateAdded=" + dateAdded +
-                ", modifiedBy=" + modifiedBy +
-                '}';
+        return serialNumber + " | " + brand;
     }
 }
