@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,15 +26,21 @@ public class AuditSearchResultsPage extends AppCompatActivity {
     private Button submitButton;
     private Button cancelButton;
 
+    //list views
     private ListView resultsListView;
+    private ListView confirmedResultsListView;
 
     private ArrayAdapter<String> resultAdapter;
+    private ArrayAdapter<String> confirmedResultAdapter;
 
-    private ArrayList<String> items;
+    private ArrayList<String> resultsItems;
+    private ArrayList<String> confirmedItems;
 
     private String building;
     private String room;
     private String item;
+
+    private ArrayList<String> serialNums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         setContentView(R.layout.activity_audit_search_results_page);
 
         initUI();
+        serialNums = new ArrayList<>();
 
         //Submit Button
         //TODO: changeActivity(submit, ?.class);
@@ -50,18 +58,32 @@ public class AuditSearchResultsPage extends AppCompatActivity {
 
         building = getIntent().getStringExtra("building");
         room     = getIntent().getStringExtra("room");
-        item     = getIntent().getStringExtra("item");
+        item     = getIntent().getStringExtra("item");  //Todo: no item specific.  Need abstract class
 
-        items = new ArrayList<>();
+        resultsItems = getIntent().getStringArrayListExtra("resultsList");
+        confirmedItems = getIntent().getStringArrayListExtra("confirmedResultsList");
 
-        retrieveAndDisplayItems();
+        handleListViews();
+
+        resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*Intent i = new Intent(AuditSearchResultsPage.this, AuditItemConfirmationPage.class);
+                i.putExtra("serialNum", serialNums.get(position));
+                i.putExtra("itemType", item);
+                i.putExtra("resultsList", resultsItems);
+                i.putExtra("confirmedResultsList", confirmedItems);
+                startActivity(i);*/
+                Toast.makeText(AuditSearchResultsPage.this, "Serial Num Referenced: " + serialNums.get(position), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initUI() {
-        submitButton     = findViewById(R.id.submitButton);
-        cancelButton     = findViewById(R.id.cancelButton);
-        resultsListView  = findViewById(R.id.resultsListView);
-
+        submitButton             = findViewById(R.id.submitButton);
+        cancelButton             = findViewById(R.id.cancelButton);
+        resultsListView          = findViewById(R.id.resultsListView);
+        confirmedResultsListView = findViewById(R.id.confirmedResultsListView);
     }
 
     /**
@@ -80,10 +102,40 @@ public class AuditSearchResultsPage extends AppCompatActivity {
     }
 
     /**
+     * updates the values within the list views.  This method should only be called once when the
+     *  activity is loaded.
+     */
+    private void handleListViews(){
+        if(resultsItems.isEmpty() && confirmedItems.isEmpty()){ //initial case
+            retrieveItems(); //initialize arraylists and displayed the information
+        }
+        else{
+            resultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, resultsItems);
+            resultsListView.setAdapter(resultAdapter);
+            resetSerialNums();
+
+            confirmedResultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, confirmedItems);
+            confirmedResultsListView.setAdapter(confirmedResultAdapter);
+        }
+    }
+
+    /**
+     * every time we return from the Confirm page we must reset the Serial Num references so that
+     *  when a new item is picked, it is pointing to the correct reference
+     */
+    private void resetSerialNums(){
+        serialNums.clear();
+        for (String printOut : resultsItems){
+            String [] components = printOut.split("|");
+            serialNums.add(components[0].trim());
+        }
+    }
+
+    /**
      * Method used to get all valid computer IDs of the current item type (will work for printers sorta for now)
      * and calls getComputerInfo based on the current computerID
      */
-    private void retrieveAndDisplayItems() {
+    private void retrieveItems() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(item);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,18 +146,19 @@ public class AuditSearchResultsPage extends AppCompatActivity {
                     if(dataSnapshot.getKey() == "Computer"){
                         Computer c = d.getValue(Computer.class);
                         if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
-                            items.add(c.toString());
+                            resultsItems.add(c.toString());
+                            serialNums.add(c.getSerialNumber());
                         }
-                        //Items are Printers
-                    } else if(dataSnapshot.getKey() == "Printer"){
+                    }
+                    if(dataSnapshot.getKey() == "Printer"){
                         Printer c = d.getValue(Printer.class);
                         if(c.getBuilding().equalsIgnoreCase(building) && String.valueOf(c.getRoomNumber()).equalsIgnoreCase(room)) {
-                            items.add(c.toString());
+                            resultsItems.add(c.toString());
+                            serialNums.add(c.getSerialNumber());
                         }
                     }
                 }
-                //ListView Setup
-                resultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, items);
+                resultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, resultsItems);
                 resultsListView.setAdapter(resultAdapter);
             }
 

@@ -66,6 +66,8 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra("item", currentItem);
                 intent.putExtra("building", currentBuilding);
                 intent.putExtra("room", currentRoom);
+                intent.putExtra("resultsList", new ArrayList<String>());
+                intent.putExtra("confirmedResultsList", new ArrayList<String>());
                 startActivity(intent);
             }
         });
