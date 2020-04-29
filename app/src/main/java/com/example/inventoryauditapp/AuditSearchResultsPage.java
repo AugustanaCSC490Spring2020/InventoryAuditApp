@@ -48,6 +48,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         setContentView(R.layout.activity_audit_search_results_page);
 
         initUI();
+
         serialNums = new ArrayList<>();
 
         //Submit Button
@@ -68,13 +69,15 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*Intent i = new Intent(AuditSearchResultsPage.this, AuditItemConfirmationPage.class);
+                Intent i = new Intent(AuditSearchResultsPage.this, AuditItemConfirmationPage.class);
                 i.putExtra("serialNum", serialNums.get(position));
                 i.putExtra("itemType", item);
+                i.putExtra("room", room);
+                i.putExtra("building", building);
                 i.putExtra("resultsList", resultsItems);
                 i.putExtra("confirmedResultsList", confirmedItems);
-                startActivity(i);*/
-                Toast.makeText(AuditSearchResultsPage.this, "Serial Num Referenced: " + serialNums.get(position), Toast.LENGTH_SHORT).show();
+                i.putExtra("position", position);
+                startActivity(i);
             }
         });
     }
