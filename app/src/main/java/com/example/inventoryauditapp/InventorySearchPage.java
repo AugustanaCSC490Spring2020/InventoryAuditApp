@@ -54,40 +54,6 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
         handleItemSpinner();
         resetButton.setOnClickListener(this);
 
-        /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Computer");
-        Computer c = new Computer("O2D489", "Olin", 200, "Windows 10", "Dell",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
-        ref.child(c.getSerialNumber()).setValue(c);
-
-        Computer d = new Computer("O2L654", "Olin", 200, "Windows 10 Pro", "Lenovo",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("kevinphoenix16"));
-        ref.child(d.getSerialNumber()).setValue(d);
-
-        Computer e = new Computer("O1D865", "Old Main", 100, "Windows 10", "Dell",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("maxmccomb16"));
-        ref.child(e.getSerialNumber()).setValue(e);
-
-        Computer f = new Computer("O1H893", "Old Main", 101, "Windows 10", "HP",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
-        ref.child(f.getSerialNumber()).setValue(f);
-
-        Computer g = new Computer("E2H168", "Evald", 200, "Windows 10", "HP",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
-        ref.child(g.getSerialNumber()).setValue(g);
-
-        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Printer");
-        Printer p = new Printer("O2HL486", "Olin", 200, "Laser", "HP", Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
-        ref2.child(p.getSerialNumber()).setValue(p);
-
-        Printer q = new Printer("O2HI354", "Olin", 200, "Ink", "HP", Calendar.getInstance().getTime().toString(), new User("kevinphoenix16"));
-        ref2.child(q.getSerialNumber()).setValue(q);
-
-        Printer r = new Printer("O1HL843", "Old Main", 100, "Laser", "HP", Calendar.getInstance().getTime().toString(), new User("maxmccomb16"));
-        ref2.child(r.getSerialNumber()).setValue(r);
-
-        Printer s = new Printer("O1HL287", "Old Main", 101, "Laser", "HP", Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
-        ref2.child(s.getSerialNumber()).setValue(s);
-
-        Printer t = new Printer("E2IL287", "Evald", 200, "Ink", "HP", Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
-        ref2.child(t.getSerialNumber()).setValue(t);
-        */
-
-
     }
 
     /**
