@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +54,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         //TODO: changeActivity(submit, ?.class);
 
         //Cancel Button
-        changeActivity(cancelButton, AuditSearchPage.class);
+        changeActivityWithButton(cancelButton, SearchPage.class);
 
         building = getIntent().getStringExtra("building");
         room     = getIntent().getStringExtra("room");
@@ -94,7 +93,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
      * @param button - button that is clicked on Main Page
      * @param page - the new activity to change to
      */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
+    private void changeActivityWithButton(Button button, final Class<? extends Activity> page) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

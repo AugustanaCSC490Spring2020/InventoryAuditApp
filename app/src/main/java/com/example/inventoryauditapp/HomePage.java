@@ -2,7 +2,6 @@ package com.example.inventoryauditapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,13 +21,33 @@ public class HomePage extends AppCompatActivity {
         initUI();
 
         //Inventory Button
-        changeActivity(inventoryButton, InventorySearchPage.class);
+        inventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), SearchPage.class);
+                intent.putExtra(SearchPage.EXTRA_MODE, SearchPage.MODE_INVENTORY);
+                startActivity(intent);
+            }
+        });
 
         //Audit Button
-        changeActivity(auditButton, AuditSearchPage.class);
+        auditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), SearchPage.class);
+                intent.putExtra(SearchPage.EXTRA_MODE,SearchPage.MODE_AUDIT);
+                startActivity(intent);
+
+            }
+        });
 
         //About Button
-        changeActivity(aboutButton, AboutPage.class);
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), AboutPage.class));
+            }
+        });
     }
 
     //Initializes Components
@@ -36,20 +55,5 @@ public class HomePage extends AppCompatActivity {
         inventoryButton = findViewById(R.id.inventoryButton);
         auditButton     = findViewById(R.id.auditButton);
         aboutButton     = findViewById(R.id.aboutButton);
-    }
-
-    /**
-     *
-     * @param button - button that is clicked on Main Page
-     * @param page - the new activity to change to
-     */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), page);
-                startActivity(intent);
-            }
-        });
     }
 }

@@ -23,7 +23,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AuditSearchPage extends AppCompatActivity implements View.OnClickListener {
+public class SearchPage extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String EXTRA_MODE = "mode";
+    public static final String MODE_INVENTORY = "inventory";
+    public static final String MODE_AUDIT = "audit";
 
     private Spinner itemSpinner;
     private Spinner buildingSpinner;
@@ -41,15 +45,22 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
     private String currentItem = "";
     private String currentBuilding = "";
     private String currentRoom = "";
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audit_search_page);
-
+        setContentView(R.layout.activity_inventory_search_page);
         initUI();
-        changeActivity(searchButton, AuditSearchResultsPage.class);
-        initSpinners();
+
+        mode = getIntent().getStringExtra(EXTRA_MODE);
+        if(mode.equals(MODE_INVENTORY)) {
+            changeActivityWithButton(searchButton, InventorySearchResultsPage.class);
+        } else {
+            changeActivityWithButton(searchButton, AuditSearchResultsPage.class);
+        }
+
+        handleItemSpinner();
         resetButton.setOnClickListener(this);
 
     }
@@ -58,7 +69,7 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
      * @param button - button that is clicked on Main Page
      * @param page   - the new activity to change to
      */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
+    private void changeActivityWithButton(Button button, final Class<? extends Activity> page) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,8 +77,10 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra("item", currentItem);
                 intent.putExtra("building", currentBuilding);
                 intent.putExtra("room", currentRoom);
-                intent.putExtra("resultsList", new ArrayList<String>());
-                intent.putExtra("confirmedResultsList", new ArrayList<String>());
+                if(mode.equals(MODE_AUDIT)) {
+                    intent.putExtra("resultsList", new ArrayList<String>());
+                    intent.putExtra("confirmedResultsList", new ArrayList<String>());
+                }
                 startActivity(intent);
             }
         });
@@ -84,18 +97,14 @@ public class AuditSearchPage extends AppCompatActivity implements View.OnClickLi
 
     //Initializes Components
     private void initUI() {
-        itemSpinner     = findViewById(R.id.itemSpinner);
+        itemSpinner = findViewById(R.id.itemSpinner);
         buildingSpinner = findViewById(R.id.buildingSpinner);
-        roomSpinner     = findViewById(R.id.roomSpinner);
+        roomSpinner = findViewById(R.id.roomSpinner);
 
-        searchButton    = findViewById(R.id.searchButton);
-        resetButton     = findViewById(R.id.resetButton);
+        searchButton = findViewById(R.id.searchButton);
+        resetButton = findViewById(R.id.resetButton);
     }
 
-    // Method used to initialize spinners and Arraylists used for spinners
-    private void initSpinners() {
-        handleItemSpinner();
-    }
 
     /**
      * Method used to handle selection of item. Will reset the lists and values in the buildings and

@@ -14,18 +14,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 
 public class AddItemPage extends AppCompatActivity {
 
@@ -64,12 +56,9 @@ public class AddItemPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item_page);
-
         initUI();
-
         //Cancel Button
-        changeActivity(cancel, InventorySearchResultsPage.class);
-
+        changeActivityWithButton(cancel, InventorySearchResultsPage.class);
         //sets a listener to see if the spinner is changed
         itemType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,7 +71,6 @@ public class AddItemPage extends AppCompatActivity {
                 //left intentionally blank
             }
         });
-
         //sets an on click listener for when the user submits their entries
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +83,6 @@ public class AddItemPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     //Initializes Components
@@ -119,7 +106,7 @@ public class AddItemPage extends AppCompatActivity {
      * @param button - button that is clicked on Main Page
      * @param page - the new activity to change to
      */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
+    private void changeActivityWithButton(Button button, final Class<? extends Activity> page) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

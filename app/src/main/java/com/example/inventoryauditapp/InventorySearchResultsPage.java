@@ -46,7 +46,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         initIU();
 
         //Add Item Button
-        changeActivity(addItemButton, AddItemPage.class);
+        changeActivityWithButton(addItemButton, AddItemPage.class);
 
         building = getIntent().getStringExtra("building");
         room = getIntent().getStringExtra("room");
@@ -78,7 +78,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
      * @param button - button that is clicked on Main Page
      * @param page - the new activity to change to
      */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
+    private void changeActivityWithButton(Button button, final Class<? extends Activity> page) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
