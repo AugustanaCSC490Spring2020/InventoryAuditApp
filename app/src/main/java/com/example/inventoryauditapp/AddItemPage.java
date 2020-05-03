@@ -48,17 +48,15 @@ public class AddItemPage extends AppCompatActivity {
     String buildingText;
     String roomText;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item_page);
         initUI();
+
         //Cancel Button
         changeActivityWithButton(cancel, InventorySearchResultsPage.class);
+
         //sets a listener to see if the spinner is changed
         itemType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
