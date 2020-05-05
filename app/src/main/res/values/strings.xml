@@ -12,6 +12,7 @@
     <string name="inventoryButton">Inventory</string>
     <string name="auditButton">Audit</string>
     <string name="aboutButton">About</string>
+    <string name="signInButton">Sign In</string>
 
     //Inventory and Audit Search Page
     <string name="inventorySearchPageTitle">Search in Inventory</string>
@@ -22,6 +23,15 @@
 
     //About Page
     <string name="aboutPageTitle">About</string>
+    <string name="aboutPageInfo">This app was made as a senior project for Dr. Stonedahls CSC490 class at Augustana College in Rock Island Illinois</string>
+    <string name="kevinName">Kevin Phoenix</string>
+    <string name="kevinInfo">Kevin is a senior at Augustana College Majoring in Computer Science. When he is not coding he enjoys playing guitar and riding tractors.</string>
+    <string name="dylanName">Dylan Hart</string>
+    <string name="dylanInfo">Dylan is a senior at Augustana College Majoring in Computer Science. When he is not coding he enjoys playing baseball, and playing rocket league.</string>
+    <string name="maxName">Max McComb</string>
+    <string name="maxInfo">Max is a senior at Augustana College Majoring in Computer Science. When he is not coding Max enjoys playing Basketball, and listening to Kevin play guitar.</string>
+    <string name="scottName">Scott Daluga</string>
+    <string name="scottInfo">Scott is a senior at Augustana College majoring in Computer Science and minoring in Math. He enjoys playing tennis and hanging out with his four siblings in his free time.</string>
 
     //Inventory Search Results Page
     <string name="inventorySearchResultsTitle">Results</string>
