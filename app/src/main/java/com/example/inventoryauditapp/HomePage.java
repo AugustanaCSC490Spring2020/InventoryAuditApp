@@ -37,13 +37,33 @@ public class HomePage extends AppCompatActivity {
         initUI();
 
         //Inventory Button
-        changeActivity(inventoryButton, InventorySearchPage.class);
+        inventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), SearchPage.class);
+                intent.putExtra(SearchPage.EXTRA_MODE, SearchPage.MODE_INVENTORY);
+                startActivity(intent);
+            }
+        });
 
         //Audit Button
-        changeActivity(auditButton, AuditSearchPage.class);
+        auditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), SearchPage.class);
+                intent.putExtra(SearchPage.EXTRA_MODE,SearchPage.MODE_AUDIT);
+                startActivity(intent);
+
+            }
+        });
 
         //About Button
-        changeActivity(aboutButton, AboutPage.class);
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), AboutPage.class));
+            }
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         client = GoogleSignIn.getClient(this, gso);

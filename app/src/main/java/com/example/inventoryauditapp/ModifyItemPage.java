@@ -61,8 +61,6 @@ public class ModifyItemPage extends AppCompatActivity {
 
         initializeTextFields();
 
-
-
         //I know this is redundant now but will later need to call external method to store data
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +101,6 @@ public class ModifyItemPage extends AppCompatActivity {
                     brandEditText.getText().toString(),
                     dateAddedDisplayTextView.getText().toString(),
                     new User(modifiedByEditText.getText().toString()));
-
             ref.setValue(p);
         }
         else{

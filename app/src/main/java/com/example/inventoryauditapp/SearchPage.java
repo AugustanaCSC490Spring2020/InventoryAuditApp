@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,11 +20,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InventorySearchPage extends AppCompatActivity implements View.OnClickListener {
+public class SearchPage extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String EXTRA_MODE = "mode";
+    public static final String MODE_INVENTORY = "inventory";
+    public static final String MODE_AUDIT = "audit";
 
     private Spinner itemSpinner;
     private Spinner buildingSpinner;
@@ -43,50 +45,23 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
     private String currentItem = "";
     private String currentBuilding = "";
     private String currentRoom = "";
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_search_page);
-
         initUI();
-        changeActivity(searchButton, InventorySearchResultsPage.class);
+
+        mode = getIntent().getStringExtra(EXTRA_MODE);
+        if(mode.equals(MODE_INVENTORY)) {
+            changeActivityWithButton(searchButton, InventorySearchResultsPage.class);
+        } else {
+            changeActivityWithButton(searchButton, AuditSearchResultsPage.class);
+        }
+
         handleItemSpinner();
         resetButton.setOnClickListener(this);
-
-        /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Computer");
-        Computer c = new Computer("O2D489", "Olin", 200, "Windows 10", "Dell",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
-        ref.child(c.getSerialNumber()).setValue(c);
-
-        Computer d = new Computer("O2L654", "Olin", 200, "Windows 10 Pro", "Lenovo",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("kevinphoenix16"));
-        ref.child(d.getSerialNumber()).setValue(d);
-
-        Computer e = new Computer("O1D865", "Old Main", 100, "Windows 10", "Dell",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("maxmccomb16"));
-        ref.child(e.getSerialNumber()).setValue(e);
-
-        Computer f = new Computer("O1H893", "Old Main", 101, "Windows 10", "HP",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
-        ref.child(f.getSerialNumber()).setValue(f);
-
-        Computer g = new Computer("E2H168", "Evald", 200, "Windows 10", "HP",  Calendar.getInstance().getTime().toString(), Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
-        ref.child(g.getSerialNumber()).setValue(g);
-
-        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Printer");
-        Printer p = new Printer("O2HL486", "Olin", 200, "Laser", "HP", Calendar.getInstance().getTime().toString(), new User("dylanhart16"));
-        ref2.child(p.getSerialNumber()).setValue(p);
-
-        Printer q = new Printer("O2HI354", "Olin", 200, "Ink", "HP", Calendar.getInstance().getTime().toString(), new User("kevinphoenix16"));
-        ref2.child(q.getSerialNumber()).setValue(q);
-
-        Printer r = new Printer("O1HL843", "Old Main", 100, "Laser", "HP", Calendar.getInstance().getTime().toString(), new User("maxmccomb16"));
-        ref2.child(r.getSerialNumber()).setValue(r);
-
-        Printer s = new Printer("O1HL287", "Old Main", 101, "Laser", "HP", Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
-        ref2.child(s.getSerialNumber()).setValue(s);
-
-        Printer t = new Printer("E2IL287", "Evald", 200, "Ink", "HP", Calendar.getInstance().getTime().toString(), new User("scottdaluga16"));
-        ref2.child(t.getSerialNumber()).setValue(t);
-        */
-
 
     }
 
@@ -94,7 +69,7 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
      * @param button - button that is clicked on Main Page
      * @param page   - the new activity to change to
      */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
+    private void changeActivityWithButton(Button button, final Class<? extends Activity> page) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +77,10 @@ public class InventorySearchPage extends AppCompatActivity implements View.OnCli
                 intent.putExtra("item", currentItem);
                 intent.putExtra("building", currentBuilding);
                 intent.putExtra("room", currentRoom);
+                if(mode.equals(MODE_AUDIT)) {
+                    intent.putExtra("resultsList", new ArrayList<String>());
+                    intent.putExtra("confirmedResultsList", new ArrayList<String>());
+                }
                 startActivity(intent);
             }
         });
