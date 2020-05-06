@@ -29,11 +29,14 @@ public class AuditSearchResultsPage extends AppCompatActivity {
     private ListView resultsListView;
     private ListView confirmedResultsListView;
 
+    //converts ArrayList into something that can be displayed in the list view
     private ArrayAdapter<String> resultAdapter;
     private ArrayAdapter<String> confirmedResultAdapter;
 
+    //Data storage for pendig items and confirmed items
     private ArrayList<String> resultsItems;
     private ArrayList<String> confirmedItems;
+
 
     private String building;
     private String room;
@@ -48,6 +51,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
 
         initUI();
 
+        //initialize serial nums arraylist
         serialNums = new ArrayList<>();
 
         //Submit Button
@@ -58,13 +62,18 @@ public class AuditSearchResultsPage extends AppCompatActivity {
 
         building = getIntent().getStringExtra("building");
         room     = getIntent().getStringExtra("room");
-        item     = getIntent().getStringExtra("item");  //Todo: no item specific.  Need abstract class
+        item     = getIntent().getStringExtra("item");
 
         resultsItems = getIntent().getStringArrayListExtra("resultsList");
         confirmedItems = getIntent().getStringArrayListExtra("confirmedResultsList");
 
         handleListViews();
 
+        /**
+         * when an item is clicked in the list view.  The confirm item activity is started.
+         *  We need to pass in all of these extras so that the current state of this screen
+         *   is preserved.
+         */
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -79,13 +88,6 @@ public class AuditSearchResultsPage extends AppCompatActivity {
                 startActivity(i);
             }
         });
-    }
-
-    private void initUI() {
-        submitButton             = findViewById(R.id.submitButton);
-        cancelButton             = findViewById(R.id.cancelButton);
-        resultsListView          = findViewById(R.id.resultsListView);
-        confirmedResultsListView = findViewById(R.id.confirmedResultsListView);
     }
 
     /**
@@ -109,9 +111,9 @@ public class AuditSearchResultsPage extends AppCompatActivity {
      */
     private void handleListViews(){
         if(resultsItems.isEmpty() && confirmedItems.isEmpty()){ //initial case
-            retrieveItems(); //initialize arraylists and displayed the information
+            retrieveItems(); //initialize arraylists and displays the information
         }
-        else{
+        else{ //this should be run every time the user confirms an item and returns to this screen
             resultAdapter = new ArrayAdapter<>(AuditSearchResultsPage.this, android.R.layout.simple_list_item_1, resultsItems);
             resultsListView.setAdapter(resultAdapter);
             resetSerialNums();
@@ -169,5 +171,12 @@ public class AuditSearchResultsPage extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void initUI() {
+        submitButton             = findViewById(R.id.submitButton);
+        cancelButton             = findViewById(R.id.cancelButton);
+        resultsListView          = findViewById(R.id.resultsListView);
+        confirmedResultsListView = findViewById(R.id.confirmedResultsListView);
     }
 }

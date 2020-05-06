@@ -76,7 +76,6 @@ public class ModifyItemPage extends AppCompatActivity {
      *  by the user
      */
     public void updateDatabase(){
-        // TODO: Update this to reflect DB changes
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
         if(itemType.equals("Computer")){
             Computer c;
@@ -173,21 +172,6 @@ public class ModifyItemPage extends AppCompatActivity {
         else{
             //could just be an if - else statement but leaving room for more items being added
         }
-    }
-
-    /**
-     *
-     * @param button - button that is clicked on Main Page
-     * @param page - the new activity to change to
-     */
-    private void changeActivity(Button button, final Class<? extends Activity> page) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), page);
-                startActivity(intent);
-            }
-        });
     }
 
 

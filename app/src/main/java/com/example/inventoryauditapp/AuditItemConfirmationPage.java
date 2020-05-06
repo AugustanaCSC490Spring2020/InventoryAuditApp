@@ -25,7 +25,7 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
     private Button confirmButton;
     private Button cancelButton;
     private ListView itemDisplay;
-    private EditText commentBox;
+    private EditText commentBox; //ToDo: implement comment box in email
 
     //to display data in the ListView
     private ArrayList<String> dataList;
@@ -59,6 +59,7 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
 
         retrieveAndDisplayData();
 
+        //cancel button.  Passes all data back to previous screen
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +73,7 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
             }
         });
 
+        //confirm button.  moves referenced item from results list to confirmed list
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +92,10 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
 
     }
 
+    /**
+     * this method grabs all the data on the referenced object and displays it so the user can
+     *  confirm that the data is correct.
+     */
     private void retrieveAndDisplayData(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
         ref.addValueEventListener(new ValueEventListener() {
