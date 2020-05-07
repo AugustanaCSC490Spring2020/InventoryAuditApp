@@ -103,24 +103,14 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(itemType.equals("Computer")){
                     Computer c = dataSnapshot.getValue(Computer.class);
-                    dataList.add("Serial Number: " + c.getSerialNumber());
-                    dataList.add("Building     : " + c.getBuilding());
-                    dataList.add("Room Number  : " + c.getRoomNumber());
+                    setSharedData(c);
                     dataList.add("OS           : "  + c.getOs());
-                    dataList.add("Brand        : "  + c.getBrand());
                     dataList.add("Last Scanned : "  + c.getLastScanned());
-                    dataList.add("Date Added   : "  + c.getDateAdded());
-                    dataList.add("Modified By  : " + c.getModifiedBy());
                 }
                 else if (itemType.equals("Printer")){
                     Printer c = dataSnapshot.getValue(Printer.class);
-                    dataList.add("Serial Number: " + c.getSerialNumber());
-                    dataList.add("Building     : " + c.getBuilding());
-                    dataList.add("Room Number  : " + c.getRoomNumber());
-                    dataList.add("Brand        : "  + c.getBrand());
-                    dataList.add("Date Added   : "  + c.getDateAdded());
-                    dataList.add("Modified By  : " + c.getModifiedBy());
-                    //dataList.add("Last Scanned : "  + c.getLastScanned()); Todo: printer should have a last scanned field
+                    setSharedData(c);
+                    dataList.add("Type:        : " + c.getType());
                 }
                 else{
                     //could just be an if - else statement but leaving room for more items being added
@@ -134,6 +124,19 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * sets the data for the the item being referenced.
+     * @param c - an item object to be referenced
+     */
+    private void setSharedData(Item c){
+        dataList.add("Serial Number: " + c.getSerialNumber());
+        dataList.add("Building     : " + c.getBuilding());
+        dataList.add("Room Number  : " + c.getRoomNumber());
+        dataList.add("Brand        : "  + c.getBrand());
+        dataList.add("Date Added   : "  + c.getDateAdded());
+        dataList.add("Modified By  : " + c.getModifiedBy());
     }
 
     private void initUI(){

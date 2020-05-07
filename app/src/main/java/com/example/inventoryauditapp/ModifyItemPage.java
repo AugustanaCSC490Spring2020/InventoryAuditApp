@@ -118,24 +118,13 @@ public class ModifyItemPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(itemType.equals("Computer")){
                     Computer c = dataSnapshot.getValue(Computer.class);
-                    itemIDTextView.setText(c.getSerialNumber()+"");
-                    buildingEditText.setText(c.getBuilding());
-                    roomEditText.setText(c.getRoomNumber()+"");
-                    brandEditText.setText(c.getBrand());
-                    dateAddedDisplayTextView.setText(c.getDateAdded());
-                    modifiedByEditText.setText(c.getModifiedBy().toString());
+                    setSharedItemFields(c);
                     OSEditText.setText(c.getOs());
                     lastModifiedDisplayTextView.setText(c.getLastScanned());
                 }
                 else if (itemType.equals("Printer")){
                     Printer p = dataSnapshot.getValue(Printer.class);
-                    itemIDTextView.setText(p.getSerialNumber()+"");
-                    buildingEditText.setText(p.getBuilding());
-                    roomEditText.setText(p.getRoomNumber()+"");
-                    brandEditText.setText(p.getBrand());
-                    dateAddedDisplayTextView.setText(p.getDateAdded());
-                    modifiedByEditText.setText(p.getModifiedBy().toString());
-                    //lastModifiedDisplayTextView.setText(p.getLastScanned()) Todo: printer should have a last scanned field
+                    setSharedItemFields(p);
                 }
                 else{
                     //could just be an if - else statement but leaving room for more items being added
@@ -147,6 +136,19 @@ public class ModifyItemPage extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * sets the data fields for the the item.
+     * @param c - an item object to be referenced
+     */
+    public void setSharedItemFields(Item c){
+        itemIDTextView.setText(c.getSerialNumber()+"");
+        buildingEditText.setText(c.getBuilding());
+        roomEditText.setText(c.getRoomNumber()+"");
+        brandEditText.setText(c.getBrand());
+        dateAddedDisplayTextView.setText(c.getDateAdded());
+        modifiedByEditText.setText(c.getModifiedBy().toString());
     }
 
     /**
