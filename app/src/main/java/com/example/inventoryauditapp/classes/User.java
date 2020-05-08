@@ -1,4 +1,4 @@
-package com.example.inventoryauditapp;
+package com.example.inventoryauditapp.classes;
 
 public class User {
 

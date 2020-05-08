@@ -1,6 +1,8 @@
-package com.example.inventoryauditapp;
+package com.example.inventoryauditapp.classes;
 
-abstract class Item {
+import com.example.inventoryauditapp.classes.User;
+
+public abstract class Item {
     private String serialNumber;
     private String building;
     private int roomNumber;

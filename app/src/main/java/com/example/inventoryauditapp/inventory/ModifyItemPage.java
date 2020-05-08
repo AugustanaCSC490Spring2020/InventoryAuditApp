@@ -1,10 +1,8 @@
-package com.example.inventoryauditapp;
+package com.example.inventoryauditapp.inventory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +10,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.inventoryauditapp.classes.Computer;
+import com.example.inventoryauditapp.classes.Item;
+import com.example.inventoryauditapp.classes.Printer;
+import com.example.inventoryauditapp.R;
+import com.example.inventoryauditapp.classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

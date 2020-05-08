@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.inventoryauditapp.audit.AuditSearchResultsPage;
+import com.example.inventoryauditapp.classes.Computer;
+import com.example.inventoryauditapp.inventory.InventorySearchResultsPage;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.inventoryauditapp;
+package com.example.inventoryauditapp.inventory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.inventoryauditapp.R;
+import com.example.inventoryauditapp.classes.Computer;
+import com.example.inventoryauditapp.classes.Printer;
+import com.example.inventoryauditapp.classes.User;
+import com.example.inventoryauditapp.inventory.InventorySearchResultsPage;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

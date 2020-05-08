@@ -1,4 +1,7 @@
-package com.example.inventoryauditapp;
+package com.example.inventoryauditapp.classes;
+
+import com.example.inventoryauditapp.classes.Item;
+import com.example.inventoryauditapp.classes.User;
 
 public class Printer extends Item {
 

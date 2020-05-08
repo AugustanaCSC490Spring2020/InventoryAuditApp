@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AuditItemConfirmationPage"></activity>
+            android:name=".audit.AuditItemConfirmationPage"></activity>
         <activity
-            android:name=".AuditSearchResultsPage"/>
+            android:name=".audit.AuditSearchResultsPage"/>
         <activity
-            android:name=".ModifyItemPage" />
+            android:name=".inventory.ModifyItemPage" />
         <activity
-            android:name=".InventorySearchResultsPage"/>
+            android:name=".inventory.InventorySearchResultsPage"/>
         <activity
             android:name=".AboutPage"/>
         <activity
             android:name=".SearchPage"/>
         <activity
-            android:name=".AddItemPage" />
+            android:name=".inventory.AddItemPage" />
         <activity
             android:name=".HomePage">
             <intent-filter>
