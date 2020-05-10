@@ -68,13 +68,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.939" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/osInput"
         android:layout_width="188dp"
         android:layout_height="43dp"
         android:ems="10"
         android:hint="@string/OS"
         android:inputType="textPersonName"
+        android:completionHint="Operating Systems"
+        android:completionThreshold="1"
+        android:text=""
+        android:dropDownAnchor="@id/addItemText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.838"
@@ -96,13 +100,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.595" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/brandInput"
         android:layout_width="188dp"
         android:layout_height="43dp"
         android:ems="10"
         android:hint="@string/brand"
         android:inputType="textPersonName"
+        android:completionHint="Brands"
+        android:completionThreshold="1"
+        android:text=""
+        android:dropDownAnchor="@id/addItemText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.838"
@@ -110,33 +118,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.489" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/roomInput"
         android:layout_width="188dp"
         android:layout_height="43dp"
         android:ems="10"
         android:hint="@string/room"
         android:inputType="textPersonName"
+        android:completionHint="Rooms"
+        android:completionThreshold="1"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.838"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.402" />
-
-    <EditText
-        android:id="@+id/buildingInput"
-        android:layout_width="188dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:hint="@string/building"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.838"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.309" />
 
     <TextView
         android:id="@+id/OSText"
@@ -246,5 +243,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.22" />
+
+    <AutoCompleteTextView
+        android:id="@+id/buildingInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="188dp"
+        android:height="43dp"
+        android:completionHint="Buildings"
+        android:completionThreshold="1"
+        android:hint="Building"
+        android:text=""
+        android:dropDownAnchor="@id/addItemText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.309" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

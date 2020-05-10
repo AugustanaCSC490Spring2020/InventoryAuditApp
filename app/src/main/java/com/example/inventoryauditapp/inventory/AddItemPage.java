@@ -1,5 +1,6 @@
 package com.example.inventoryauditapp.inventory;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,13 +19,19 @@ import android.widget.Toast;
 
 import com.example.inventoryauditapp.R;
 import com.example.inventoryauditapp.classes.Computer;
+import com.example.inventoryauditapp.classes.Item;
 import com.example.inventoryauditapp.classes.Printer;
 import com.example.inventoryauditapp.classes.User;
-import com.example.inventoryauditapp.inventory.InventorySearchResultsPage;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AddItemPage extends AppCompatActivity {
 
@@ -35,10 +44,6 @@ public class AddItemPage extends AppCompatActivity {
     Spinner printerType;
 
     //Initialize EditText
-    EditText buildingInput;
-    EditText roomInput;
-    EditText osInput;
-    EditText brandInput;
     EditText lastScannedInput;
     EditText dateAddedInput;
     EditText modifiedByInput;
@@ -47,6 +52,25 @@ public class AddItemPage extends AppCompatActivity {
     //Initialize TextView
     TextView osTextView;
     TextView printerTextView;
+
+    //Initialize AutoCompleteTextView
+    AutoCompleteTextView brandInput;
+    AutoCompleteTextView buildingInput;
+    AutoCompleteTextView osInput;
+    AutoCompleteTextView roomInput;
+
+    //Arrays for AutoCompleteTextViews
+    ArrayList<String> buildings = new ArrayList<>();
+    ArrayList<String> brands = new ArrayList<>();
+    ArrayList<String> rooms = new ArrayList<>();
+    ArrayList<String> operatingSystems = new ArrayList<>();
+
+    //Arrays for Items
+    ArrayList<Computer> computers = new ArrayList<>();
+    ArrayList<Printer> printers = new ArrayList<>();
+
+    //Set used for duplicates
+    Set<String> set = new HashSet<>();
 
     //setting globals for data to be passed back to previous page
     String itemTypeText;
@@ -58,6 +82,7 @@ public class AddItemPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item_page);
         initUI();
+        getItems();
 
         //Cancel Button
         changeActivityWithButton(cancel, InventorySearchResultsPage.class);
@@ -197,5 +222,135 @@ public class AddItemPage extends AppCompatActivity {
             return false;
         }
     }
+
+    /*
+    Used to call methods that gather item info from the database.
+     */
+    private void getItems() {
+        getComputers();
+        getPrinters();
+    }
+
+    /**
+    This method's purpose is to gather all computers from the database.
+     */
+    private void getComputers() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Computer");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Computer c = ds.getValue(Computer.class);
+                    computers.add(c);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * This method is used to gather all printers from the database.
+     */
+    private void getPrinters() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Printer");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Printer p = ds.getValue(Printer.class);
+                    printers.add(p);
+                }
+                callFormDetailFunctions();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * This is for getting details to be suggested when adding a new item for
+     * certain attributes of the item being added.
+     */
+    private void callFormDetailFunctions() {
+        ArrayList<Item> items = new ArrayList<>();
+        items.addAll(computers);
+        items.addAll(printers);
+        getBuildingNames(items);
+        getBrandNames(items);
+        getOSNames(computers);
+        setAdapters();
+    }
+
+    /**
+     * This method is used for getting all current building names to populate
+     * an array adapter for suggestions to the user.
+     * @param items - An ArrayList of abstract type Item and ensures unique
+     *              values for buildings are added to the buildings variable.
+     */
+    private void getBuildingNames(ArrayList<Item> items) {
+        for(Item i: items) {
+            String building = i.getBuilding();
+            if(!set.contains(building)) {
+                set.add(building);
+                buildings.add(building);
+            }
+        }
+    }
+
+    /**
+     * This method is used for getting all current brand names to populate
+     * an array adapter for suggestions to the user.
+     * @param items - An ArrayList of abstract type Item and ensures unique
+     *              values for brand are added to the brands variable.
+     */
+    private void getBrandNames(ArrayList<Item> items) {
+        for(Item i: items) {
+            String brand = i.getBrand();
+            if(!set.contains(brand)) {
+                set.add(brand);
+                brands.add(brand);
+            }
+        }
+    }
+
+    /**
+     * This method is used for getting all current OS names to populate
+     * an array adapter for suggestions to the user.
+     * @param comp - An ArrayList of computers and ensures unique
+     *              values for OS are added to the OS variable.
+     */
+    private void getOSNames(ArrayList<Computer> comp) {
+        for(Computer c: comp) {
+            String os = c.getOs();
+            if(!set.contains(os)) {
+                set.add(os);
+                operatingSystems.add(os);
+            }
+        }
+    }
+
+    /**
+     * Method created to populate the AutoCompleteTextView suggestions using the results
+     * gathered in the above methods, all of which are unique.
+     */
+    private void setAdapters() {
+        buildingInput.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, buildings));
+        brandInput.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, brands));
+        osInput.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, operatingSystems));
+        /*
+        If we want to use pre-determined lists
+        getResources().getStringArray(R.array.brands);
+        getResources().getStringArray(R.array.operating_systems);
+         */
+    }
+
 
 }

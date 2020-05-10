@@ -27,7 +27,7 @@
     <string name="kevinName">Kevin Phoenix</string>
     <string name="kevinInfo">Kevin is a senior at Augustana College Majoring in Computer Science. When he is not coding he enjoys playing guitar and riding tractors.</string>
     <string name="dylanName">Dylan Hart</string>
-    <string name="dylanInfo">Dylan is a senior at Augustana College Majoring in Computer Science. When he is not coding he enjoys playing baseball, and playing rocket league.</string>
+    <string name="dylanInfo">Dylan is a senior at Augustana College Majoring in Computer Science. When he is not coding he enjoys playing baseball and playing rocket league.</string>
     <string name="maxName">Max McComb</string>
     <string name="maxInfo">Max is a senior at Augustana College Majoring in Computer Science. When he is not coding Max enjoys playing Basketball, and listening to Kevin play guitar.</string>
     <string name="scottName">Scott Daluga</string>
@@ -64,5 +64,60 @@
         <item>Laser</item>
         <item>Ink</item>
     </array>
+
+    //Array for add item / modify page
+    <string-array name="brands">
+        <item>Dell</item>
+        <item>Apple</item>
+        <item>HP</item>
+        <item>Asus</item>
+        <item>Acer</item>
+        <item>Lenovo</item>
+        <item>Sony</item>
+        <item>Alienware</item>
+        <item>Samsung</item>
+        <item>Toshiba</item>
+        <item>Microsoft</item>
+        <item>LG</item>
+        <item>Google</item>
+        <item>Huawei</item>
+        <item>Maingear</item>
+        <item>Origin</item>
+        <item>Digital Storm</item>
+        <item>EVGA</item>
+        <item>Falcon Northwest</item>
+        <item>Sager</item>
+        <item>Purism - Librem</item>
+        <item>Razer</item>
+        <item>Vizio</item>
+        <item>Sharp</item>
+    </string-array>
+
+    //Array for add item / modify page
+    <string-array name="operating_systems">
+        <item>MS-DOS</item>
+        <item>Windows 1.0</item>
+        <item>Windows 2.0</item>
+        <item>Windows 3.0</item>
+        <item>Windows 95</item>
+        <item>Windows 98</item>
+        <item>Windows ME</item>
+        <item>Windows 2000</item>
+        <item>Windows XP</item>
+        <item>Windows Vista</item>
+        <item>Windows 7</item>
+        <item>Windows 8</item>
+        <item>Windows 10</item>
+        <item>Solaris</item>
+        <item>Unix</item>
+        <item>Linux</item>
+        <item>MacOS</item>
+        <item>Android</item>
+        <item>iOS</item>
+        <item>Ubuntu</item>
+        <item>ChromeOS</item>
+        <item>CentOS</item>
+        <item>z/OS</item>
+    </string-array>
 
 </resources>
