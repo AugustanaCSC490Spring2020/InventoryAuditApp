@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InventoryAuditApp</string>
+    <string name="app_name">Inventory Audit App</string>
 
     //Commonly Used
     <string name="searchButton">Search</string>
