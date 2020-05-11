@@ -8,7 +8,7 @@
     <string name="cancelButton">Cancel</string>
 
     //Home Page
-    <string name="homePageTitle">Title</string>
+    <string name="homePageTitle">Inventory Audit App</string>
     <string name="inventoryButton">Inventory</string>
     <string name="auditButton">Audit</string>
     <string name="aboutButton">About</string>

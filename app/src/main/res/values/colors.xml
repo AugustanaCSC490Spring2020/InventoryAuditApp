@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#020100</color>
+    <color name="colorPrimaryDark">#F1D302</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--
+    //Color Scheme for App
+    <color name="richBlack">#020100</color>
+    <color name="safetyYellow">#F1D302</color>
+    <color name="spanishGrey">#8F9491</color>
+    <color name="white">#FFFFFF</color>
+    <color name="internationalOrange">#BB4430</color>
+    -->
 </resources>
