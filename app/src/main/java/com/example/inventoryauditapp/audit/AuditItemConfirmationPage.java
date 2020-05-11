@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.inventoryauditapp.R;
+import com.example.inventoryauditapp.classes.Audit;
 import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.classes.Item;
 import com.example.inventoryauditapp.classes.Printer;
@@ -43,6 +44,7 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
     private String roomNum;
     private String itemType;
     private int position;
+    private Audit audit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
         building       = getIntent().getStringExtra("building");
         roomNum        = getIntent().getStringExtra("room");
         position       = getIntent().getExtras().getInt("position");
+        audit          = (Audit) getIntent().getSerializableExtra("AuditObj");
 
         retrieveAndDisplayData();
 
@@ -84,16 +87,26 @@ public class AuditItemConfirmationPage extends AppCompatActivity {
                 String confirmedItem = resultsItems.get(position);
                 resultsItems.remove(position);
                 confirmedItems.add(confirmedItem);
+                storeConfirmation();
                 Intent i = new Intent(AuditItemConfirmationPage.this, AuditSearchResultsPage.class);
                 i.putExtra("building", building);
                 i.putExtra("room", roomNum);
                 i.putExtra("item", itemType);
                 i.putExtra("resultsList", resultsItems);
                 i.putExtra("confirmedResultsList", confirmedItems);
+                i.putExtra("AuditObj", audit);
                 startActivity(i);
             }
         });
 
+    }
+
+    /**
+     * adds both the item serial number and a confirmation message to the audit object
+     */
+    private void storeConfirmation(){
+        String message = commentBox.getText().toString();
+        audit.addConfirmation(serialNum, message);
     }
 
     /**

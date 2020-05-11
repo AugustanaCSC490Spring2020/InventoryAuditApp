@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.inventoryauditapp.audit.AuditSearchResultsPage;
+import com.example.inventoryauditapp.classes.Audit;
 import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.inventory.InventorySearchResultsPage;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -83,6 +85,7 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
                 if(mode.equals(MODE_AUDIT)) {
                     intent.putExtra("resultsList", new ArrayList<String>());
                     intent.putExtra("confirmedResultsList", new ArrayList<String>());
+                    intent.putExtra("AuditObj", new Audit());
                 }
                 startActivity(intent);
             }

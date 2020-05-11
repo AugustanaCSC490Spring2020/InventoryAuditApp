@@ -4,16 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.inventoryauditapp.HomePage;
 import com.example.inventoryauditapp.R;
 import com.example.inventoryauditapp.SearchPage;
+import com.example.inventoryauditapp.classes.Audit;
 import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.classes.Printer;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +27,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AuditSearchResultsPage extends AppCompatActivity {
 
@@ -41,6 +54,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
     private ArrayList<String> resultsItems;
     private ArrayList<String> confirmedItems;
 
+    private Audit audit;
 
     private String building;
     private String room;
@@ -64,6 +78,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         //Cancel Button
         changeActivityWithButton(cancelButton, SearchPage.class);
 
+        audit    = (Audit) getIntent().getSerializableExtra("AuditObj");
         building = getIntent().getStringExtra("building");
         room     = getIntent().getStringExtra("room");
         item     = getIntent().getStringExtra("item");
@@ -89,9 +104,51 @@ public class AuditSearchResultsPage extends AppCompatActivity {
                 i.putExtra("resultsList", resultsItems);
                 i.putExtra("confirmedResultsList", confirmedItems);
                 i.putExtra("position", position);
+                i.putExtra("AuditObj", audit);
                 startActivity(i);
             }
         });
+
+        /**
+         *writes audit data to a text file and then sends the user back to the home page
+         */
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //writeToTextFile();
+                Toast.makeText(AuditSearchResultsPage.this, "CONFIRMED: " + audit.getItemNum(0) + "\t" + audit.getMessage(0), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(AuditSearchResultsPage.this, HomePage.class);
+                startActivity(i);
+            }
+        });
+    }
+
+    /**
+     * writes audit data to a text file and saves it to the current directory
+     */
+    private void writeToTextFile(){
+        String currDate = Calendar.getInstance().getTime().toString();
+        try {
+            File root = new File (Environment.getExternalStorageDirectory(), "Audits");
+            if(!root.exists()){
+                root.mkdir();
+            }
+            File filepath = new File (root, "myaudit.txt");
+            FileWriter writer = new FileWriter(filepath);
+            writer.append("CONFIRMED ITEMS: \n");
+            for (int i = 0; i < audit.getAuditSize(); i ++){
+                writer.append(audit.getItemNum(i) + "\t" + audit.getMessage(i) + "\n");
+            }
+            writer.append("\nUNCONFIRMED ITEMS: \n");
+            for (int i = 0; i < resultsItems.size(); i ++){
+                writer.append(resultsItems.get(i)+ "\n");
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("FAILURE TO WRITE FILE");
+            e.printStackTrace();
+        }
     }
 
     /**

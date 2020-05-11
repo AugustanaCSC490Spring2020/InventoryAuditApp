@@ -58,12 +58,23 @@
         android:layout_height="106dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Enter a comment or description"
         android:inputType="textMultiLine"
+        android:text="Verified"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataDisplayListView"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintVertical_bias="0.571" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter a comment or description..."
+        app:layout_constraintBottom_toTopOf="@+id/auditConfirmCommentsSection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataDisplayListView"
+        app:layout_constraintVertical_bias="0.915" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
