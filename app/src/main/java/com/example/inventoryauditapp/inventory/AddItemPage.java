@@ -83,8 +83,12 @@ public class AddItemPage extends AppCompatActivity {
         initUI();
         getItems();
 
+        itemTypeText = getIntent().getStringExtra("itemType");
+        buildingText = getIntent().getStringExtra("building");
+        roomText     = getIntent().getStringExtra("room");
+
         //Cancel Button
-        changeActivityWithButton(cancel, InventorySearchResultsPage.class);
+//        changeActivityWithButton(cancel, InventorySearchResultsPage.class);
 
         //sets a listener to see if the spinner is changed
         itemType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -110,6 +114,17 @@ public class AddItemPage extends AppCompatActivity {
                     intent.putExtra("room", roomText);
                     startActivity(intent);
                 }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
+                    intent.putExtra("item", itemType.getSelectedItem().toString());
+                    intent.putExtra("building", buildingText);
+                    intent.putExtra("room", roomText);
+                    startActivity(intent);
             }
         });
     }

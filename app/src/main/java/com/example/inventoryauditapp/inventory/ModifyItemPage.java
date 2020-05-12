@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,12 +76,14 @@ public class ModifyItemPage extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateDatabase();
-                Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
-                intent.putExtra("item", itemType);
-                intent.putExtra("building", buildingEditText.getText().toString());
-                intent.putExtra("room", roomEditText.getText().toString());
-                startActivity(intent);
+                boolean isUpdated = updateDatabase();
+                if(isUpdated) {
+                    Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
+                    intent.putExtra("item", itemType);
+                    intent.putExtra("building", buildingEditText.getText().toString());
+                    intent.putExtra("room", roomEditText.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -90,34 +93,40 @@ public class ModifyItemPage extends AppCompatActivity {
      * Updates database with the new information.  New information will be entered into text fields
      *  by the user
      */
-    public void updateDatabase(){
+    public boolean updateDatabase(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
-        if(itemType.equals("Computer")){
-            Computer c;
-            c = new Computer(
-                    serialNum,
-                    buildingEditText.getText().toString(),
-                    Integer.parseInt(roomEditText.getText().toString()),
-                    OSEditText.getText().toString(),
-                    brandEditText.getText().toString(),
-                    lastModifiedDisplayTextView.getText().toString(),
-                    dateAddedDisplayTextView.getText().toString(),
-                    new User(modifiedByEditText.getText().toString()));
-            ref.setValue(c);
+        if(!emptyText(itemType, buildingEditText.getText().toString(), roomEditText.getText().toString(), brandEditText.getText().toString(),
+                lastModifiedDisplayTextView.getText().toString(), OSEditText.getText().toString(), serialNum)) {
+            if (itemType.equals("Computer")) {
+                Computer c;
+                c = new Computer(
+                        serialNum,
+                        buildingEditText.getText().toString(),
+                        Integer.parseInt(roomEditText.getText().toString()),
+                        OSEditText.getText().toString(),
+                        brandEditText.getText().toString(),
+                        lastModifiedDisplayTextView.getText().toString(),
+                        dateAddedDisplayTextView.getText().toString(),
+                        new User(modifiedByEditText.getText().toString()));
+                ref.setValue(c);
+            } else if (itemType.equals("Printer")) {
+                Printer p;
+                p = new Printer(
+                        serialNum,
+                        buildingEditText.getText().toString(),
+                        Integer.parseInt(roomEditText.getText().toString()),
+                        printerTypeSpinner.getSelectedItem().toString(),
+                        brandEditText.getText().toString(),
+                        dateAddedDisplayTextView.getText().toString(),
+                        new User(modifiedByEditText.getText().toString()));
+                ref.setValue(p);
+            }
+            Toast.makeText(this, "Item modified successfully.", Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            Toast.makeText(this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        else if(itemType.equals("Printer")){
-            Printer p;
-            p = new Printer(
-                    serialNum,
-                    buildingEditText.getText().toString(),
-                    Integer.parseInt(roomEditText.getText().toString()),
-                    printerTypeSpinner.getSelectedItem().toString(),
-                    brandEditText.getText().toString(),
-                    dateAddedDisplayTextView.getText().toString(),
-                    new User(modifiedByEditText.getText().toString()));
-            ref.setValue(p);
-        }
-        Toast.makeText(this, "Item modified successfully.", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -205,5 +214,28 @@ public class ModifyItemPage extends AppCompatActivity {
         lastScannedTextView         = findViewById(R.id.lastScannedTextView);
         printerTypeSpinner          = findViewById(R.id.printerTypeSpinner);
         printerTypeTextView         = findViewById(R.id.printerTypeTextView);
+    }
+
+    //helper method to check if any inputted text is empty;
+    private boolean emptyText(String itemType, String building,String room,String brand, String modifiedBy,String os, String serialNumber){
+        if(TextUtils.isEmpty(serialNumber) || serialNumber.equals("")){
+            return true;
+        }else if(TextUtils.isEmpty(building) || building.equals("")){
+            return true;
+        }else if(TextUtils.isEmpty(room) || room.equals("")){
+            return true;
+        }else if(TextUtils.isEmpty(brand) || brand.equals("")) {
+            return true;
+        }else if(TextUtils.isEmpty(modifiedBy) || modifiedBy.equals("")){
+            return true;
+        }else if(itemType.equals("Computer")){
+            if(TextUtils.isEmpty(os) || os.equals("")){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }
