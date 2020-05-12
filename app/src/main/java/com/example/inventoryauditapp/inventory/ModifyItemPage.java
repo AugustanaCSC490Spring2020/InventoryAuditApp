@@ -18,6 +18,8 @@ import com.example.inventoryauditapp.classes.Item;
 import com.example.inventoryauditapp.classes.Printer;
 import com.example.inventoryauditapp.R;
 import com.example.inventoryauditapp.classes.User;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +41,7 @@ public class ModifyItemPage extends AppCompatActivity {
     private EditText roomEditText;
     private EditText OSEditText;
     private EditText brandEditText;
-    private EditText modifiedByEditText;
+    //private EditText modifiedByEditText;
 
     //fields to appear only when a printer is selected
     private TextView printerTypeTextView;
@@ -95,6 +97,10 @@ public class ModifyItemPage extends AppCompatActivity {
      */
     public boolean updateDatabase(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
+        GoogleSignInAccount acct    = GoogleSignIn.getLastSignedInAccount(this);
+        String userName             = acct.getDisplayName();
+        String userEmail            = acct.getEmail();
+        User appUser                = new User(userName, userEmail);
         if(!emptyText(itemType, buildingEditText.getText().toString(), roomEditText.getText().toString(), brandEditText.getText().toString(),
                 lastModifiedDisplayTextView.getText().toString(), OSEditText.getText().toString(), serialNum)) {
             if (itemType.equals("Computer")) {
@@ -107,7 +113,7 @@ public class ModifyItemPage extends AppCompatActivity {
                         brandEditText.getText().toString(),
                         lastModifiedDisplayTextView.getText().toString(),
                         dateAddedDisplayTextView.getText().toString(),
-                        new User(modifiedByEditText.getText().toString()));
+                        appUser);
                 ref.setValue(c);
             } else if (itemType.equals("Printer")) {
                 Printer p;
@@ -118,7 +124,7 @@ public class ModifyItemPage extends AppCompatActivity {
                         printerTypeSpinner.getSelectedItem().toString(),
                         brandEditText.getText().toString(),
                         dateAddedDisplayTextView.getText().toString(),
-                        new User(modifiedByEditText.getText().toString()));
+                        appUser);
                 ref.setValue(p);
             }
             Toast.makeText(this, "Item modified successfully.", Toast.LENGTH_SHORT).show();
@@ -171,7 +177,7 @@ public class ModifyItemPage extends AppCompatActivity {
         roomEditText.setText(c.getRoomNumber()+"");
         brandEditText.setText(c.getBrand());
         dateAddedDisplayTextView.setText(c.getDateAdded());
-        modifiedByEditText.setText(c.getModifiedBy().toString());
+        //modifiedByEditText.setText(c.getModifiedBy().toString());
     }
 
     /**
@@ -208,7 +214,7 @@ public class ModifyItemPage extends AppCompatActivity {
         brandEditText               = findViewById(R.id.brandEditText);
         dateAddedDisplayTextView    = findViewById(R.id.dateAddedDisplayTextView);
         lastModifiedDisplayTextView = findViewById(R.id.lastScannedDisplayTextView);
-        modifiedByEditText          = findViewById(R.id.modifiedByEditText);
+        //modifiedByEditText          = findViewById(R.id.modifiedByEditText);
         OSTextView                  = findViewById(R.id.OSTextView);
         itemIDTextView              = findViewById(R.id.itemIDTextView);
         lastScannedTextView         = findViewById(R.id.lastScannedTextView);
