@@ -22,6 +22,8 @@ import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.classes.Item;
 import com.example.inventoryauditapp.classes.Printer;
 import com.example.inventoryauditapp.classes.User;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,9 +46,6 @@ public class AddItemPage extends AppCompatActivity {
     Spinner printerType;
 
     //Initialize EditText
-    EditText lastScannedInput;
-    EditText dateAddedInput;
-    EditText modifiedByInput;
     EditText serialNumberInput;
 
     //Initialize TextView
@@ -124,7 +123,6 @@ public class AddItemPage extends AppCompatActivity {
         roomInput           = findViewById(R.id.roomInput);
         osInput             = findViewById(R.id.osInput);
         brandInput          = findViewById(R.id.brandInput);
-        modifiedByInput     = findViewById(R.id.modifiedInput);
         osTextView          = findViewById(R.id.OSText);
         printerTextView     = findViewById(R.id.typeText);
         printerType         = findViewById(R.id.printerTypeSpinner);
@@ -168,28 +166,30 @@ public class AddItemPage extends AppCompatActivity {
     //checks to see if all fields are entered and then submits item entry to the database
     public boolean addItem(){
         DatabaseReference ref;
-        String serialNumberText = serialNumberInput.getText().toString();
-        itemTypeText            = itemType.getSelectedItem().toString();
-        buildingText            = buildingInput.getText().toString().trim();
-        roomText                = roomInput.getText().toString().trim();
-        String brandText        = brandInput.getText().toString().trim();
-        String modifiedByText   = modifiedByInput.getText().toString().trim();
-        String osText           = osInput.getText().toString().trim();
-        String currentDate      = Calendar.getInstance().getTime().toString();
-        Integer computerRoom    = !(roomText.equals("")) ? Integer.parseInt(roomText) : 0; //Lambda function to format as integer properly when form has input or is empty
-        String printerTypeText  = printerType.getSelectedItem().toString();
-        User dummyUser          = new User("scottdaluga16","scottdaluga16@augustana.edu");
+        String serialNumberText     = serialNumberInput.getText().toString();
+        itemTypeText                = itemType.getSelectedItem().toString();
+        buildingText                = buildingInput.getText().toString().trim();
+        roomText                    = roomInput.getText().toString().trim();
+        String brandText            = brandInput.getText().toString().trim();
+        String osText               = osInput.getText().toString().trim();
+        String currentDate          = Calendar.getInstance().getTime().toString();
+        Integer computerRoom        = !(roomText.equals("")) ? Integer.parseInt(roomText) : 0; //Lambda function to format as integer properly when form has input or is empty
+        String printerTypeText      = printerType.getSelectedItem().toString();
+        GoogleSignInAccount acct    = GoogleSignIn.getLastSignedInAccount(this);
+        String userName             = acct.getDisplayName();
+        String userEmail            = acct.getEmail();
+        User appUser                = new User(userName, userEmail);
 
 
-        if(!emptyText(itemTypeText,buildingText,roomText,brandText,modifiedByText,osText,serialNumberText)){
+        if(!emptyText(itemTypeText,buildingText,roomText,brandText,osText,serialNumberText)){
             if(itemTypeText.equals("Computer")){
                 ref = FirebaseDatabase.getInstance().getReference("Computer").child(serialNumberText);
-                Computer computer = new Computer(serialNumberText,buildingText,computerRoom,osText,brandText,currentDate,currentDate,dummyUser);
+                Computer computer = new Computer(serialNumberText,buildingText,computerRoom,osText,brandText,currentDate,currentDate,appUser);
                 ref.setValue(computer);
                 Toast.makeText(this,"Successfully added Computer", Toast.LENGTH_LONG).show();
             }else if(itemTypeText.equals("Printer")){
                 ref = FirebaseDatabase.getInstance().getReference("Printer").child(serialNumberText);
-                Printer printer = new Printer(serialNumberText,buildingText,computerRoom,printerTypeText,brandText,currentDate,dummyUser);
+                Printer printer = new Printer(serialNumberText,buildingText,computerRoom,printerTypeText,brandText,currentDate,appUser);
                 ref.setValue(printer);
                 Toast.makeText(this,"Successfully added Printer", Toast.LENGTH_LONG).show();
             }
@@ -202,7 +202,7 @@ public class AddItemPage extends AppCompatActivity {
     }
 
     //helper method to check if any inputted text is empty;
-    private boolean emptyText(String itemType, String building,String room,String brand, String modifiedBy,String os, String serialNumber){
+    private boolean emptyText(String itemType, String building,String room,String brand, String os, String serialNumber){
         if(TextUtils.isEmpty(serialNumber) || serialNumber.equals("")){
             return true;
         }else if(TextUtils.isEmpty(building) || building.equals("")){
@@ -210,8 +210,6 @@ public class AddItemPage extends AppCompatActivity {
         }else if(TextUtils.isEmpty(room) || room.equals("")){
             return true;
         }else if(TextUtils.isEmpty(brand) || brand.equals("")) {
-            return true;
-        }else if(TextUtils.isEmpty(modifiedBy) || modifiedBy.equals("")){
             return true;
         }else if(itemType.equals("Computer")){
             if(TextUtils.isEmpty(os) || os.equals("")){
