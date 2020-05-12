@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.inventoryauditapp.HomePage;
 import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.classes.Printer;
 import com.example.inventoryauditapp.R;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class InventorySearchResultsPage extends AppCompatActivity {
 
     private Button addItemButton;
+    private Button homePageButton;
 
     private ListView resultsListView;
 
@@ -48,6 +50,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
 
         //Add Item Button
         changeActivityWithButton(addItemButton, AddItemPage.class);
+        changeActivityWithButton(homePageButton, HomePage.class);
 
         building = getIntent().getStringExtra("building");
         room = getIntent().getStringExtra("room");
@@ -71,6 +74,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
 
     public void initIU(){
         addItemButton    = findViewById(R.id.addItemButton);
+        homePageButton   = findViewById(R.id.returnToHomeButton);
         resultsListView  = findViewById(R.id.resultsListView);
     }
 
@@ -84,6 +88,9 @@ public class InventorySearchResultsPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), page);
+                intent.putExtra("item", item);
+                intent.putExtra("building", building);
+                intent.putExtra("room", room);
                 startActivity(intent);
             }
         });
