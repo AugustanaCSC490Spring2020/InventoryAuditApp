@@ -103,12 +103,14 @@ public class AddItemPage extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
-                Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
-                intent.putExtra("item", itemTypeText);
-                intent.putExtra("building", buildingText);
-                intent.putExtra("room", roomText);
-                startActivity(intent);
+                boolean emptyForm = addItem();
+                if(!emptyForm) {
+                    Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
+                    intent.putExtra("item", itemTypeText);
+                    intent.putExtra("building", buildingText);
+                    intent.putExtra("room", roomText);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -164,9 +166,7 @@ public class AddItemPage extends AppCompatActivity {
     }
 
     //checks to see if all fields are entered and then submits item entry to the database
-    //TODO: Use new DB structure and see discord for the replacement of using the Date field and instead
-    // use the Calendar class pm Dylan for more info
-    public void addItem(){
+    public boolean addItem(){
         DatabaseReference ref;
         String serialNumberText = serialNumberInput.getText().toString();
         itemTypeText            = itemType.getSelectedItem().toString();
@@ -176,7 +176,7 @@ public class AddItemPage extends AppCompatActivity {
         String modifiedByText   = modifiedByInput.getText().toString().trim();
         String osText           = osInput.getText().toString().trim();
         String currentDate      = Calendar.getInstance().getTime().toString();
-        Integer computerRoom    = Integer.parseInt(roomText);
+        Integer computerRoom    = !(roomText.equals("")) ? Integer.parseInt(roomText) : 0; //Lambda function to format as integer properly when form has input or is empty
         String printerTypeText  = printerType.getSelectedItem().toString();
         User dummyUser          = new User("scottdaluga16","scottdaluga16@augustana.edu");
 
@@ -193,27 +193,28 @@ public class AddItemPage extends AppCompatActivity {
                 ref.setValue(printer);
                 Toast.makeText(this,"Successfully added Printer", Toast.LENGTH_LONG).show();
             }
-                //if we add another item type;
+            return false;
         }else{
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_LONG).show();
+            return true;
         }
 
     }
 
     //helper method to check if any inputted text is empty;
     private boolean emptyText(String itemType, String building,String room,String brand, String modifiedBy,String os, String serialNumber){
-        if(TextUtils.isEmpty(serialNumber)){
+        if(TextUtils.isEmpty(serialNumber) || serialNumber.equals("")){
             return true;
-        }else if(TextUtils.isEmpty(building)){
+        }else if(TextUtils.isEmpty(building) || building.equals("")){
             return true;
-        }else if(TextUtils.isEmpty(room)){
+        }else if(TextUtils.isEmpty(room) || room.equals("")){
             return true;
-        }else if(TextUtils.isEmpty(brand)) {
+        }else if(TextUtils.isEmpty(brand) || brand.equals("")) {
             return true;
-        }else if(TextUtils.isEmpty(modifiedBy)){
+        }else if(TextUtils.isEmpty(modifiedBy) || modifiedBy.equals("")){
             return true;
         }else if(itemType.equals("Computer")){
-            if(TextUtils.isEmpty(os)){
+            if(TextUtils.isEmpty(os) || os.equals("")){
                 return true;
             }else{
                 return false;

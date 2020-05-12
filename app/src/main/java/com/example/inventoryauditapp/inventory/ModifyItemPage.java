@@ -3,12 +3,14 @@ package com.example.inventoryauditapp.inventory;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.classes.Item;
@@ -49,6 +51,8 @@ public class ModifyItemPage extends AppCompatActivity {
     //references to itemType and serial num passed in from previous intent
     String itemType;
     String serialNum;
+    String building;
+    String room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,9 @@ public class ModifyItemPage extends AppCompatActivity {
         //grabbing item type and serial num from previous activity
         itemType = getIntent().getStringExtra("itemType");
         serialNum = getIntent().getStringExtra("serialNum");
+        building = getIntent().getStringExtra("building");
+        room = getIntent().getStringExtra("room");
+
 
         initUI();
         setComponentVisibility();
@@ -69,6 +76,11 @@ public class ModifyItemPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateDatabase();
+                Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
+                intent.putExtra("item", itemType);
+                intent.putExtra("building", buildingEditText.getText().toString());
+                intent.putExtra("room", roomEditText.getText().toString());
+                startActivity(intent);
             }
         });
 
@@ -105,9 +117,8 @@ public class ModifyItemPage extends AppCompatActivity {
                     new User(modifiedByEditText.getText().toString()));
             ref.setValue(p);
         }
-        else{
-            //could just be an if - else statement but leaving room for more items being added
-        }
+        Toast.makeText(this, "Item modified successfully.", Toast.LENGTH_SHORT).show();
+
     }
 
     /**

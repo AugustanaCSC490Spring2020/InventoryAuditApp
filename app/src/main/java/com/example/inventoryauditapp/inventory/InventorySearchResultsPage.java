@@ -100,6 +100,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Firebase
+                items.clear();
                 for(DataSnapshot d: dataSnapshot.getChildren()) {
                     //Items are Computers
                     if(dataSnapshot.getKey() == "Computer"){
