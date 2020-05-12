@@ -21,6 +21,8 @@ import com.example.inventoryauditapp.SearchPage;
 import com.example.inventoryauditapp.classes.Audit;
 import com.example.inventoryauditapp.classes.Computer;
 import com.example.inventoryauditapp.classes.Printer;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +43,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
 
     private Button submitButton;
     private Button cancelButton;
+    private Button returnToHomeButton;
 
     //list views
     private ListView resultsListView;
@@ -72,11 +75,19 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         //initialize serial nums arraylist
         serialNums = new ArrayList<>();
 
-        //Submit Button
-        //TODO: changeActivity(submit, ?.class);
-
         //Cancel Button
-        changeActivityWithButton(cancelButton, SearchPage.class);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AuditSearchResultsPage.this, SearchPage.class);
+                i.putExtra("mode", "audit");
+                startActivity(i);
+            }
+        });
+
+        //return to home button
+        returnToHomeButton.setVisibility(View.INVISIBLE);
+        changeActivityWithButton(returnToHomeButton, HomePage.class);
 
         audit    = (Audit) getIntent().getSerializableExtra("AuditObj");
         building = getIntent().getStringExtra("building");
@@ -115,41 +126,43 @@ public class AuditSearchResultsPage extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //writeToTextFile();
-                Toast.makeText(AuditSearchResultsPage.this, "CONFIRMED: " + audit.getItemNum(0) + "\t" + audit.getMessage(0), Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(AuditSearchResultsPage.this, HomePage.class);
-                startActivity(i);
+                sendEmail();
+                returnToHomeButton.setVisibility(View.VISIBLE);
             }
         });
     }
 
     /**
-     * writes audit data to a text file and saves it to the current directory
+     * starts an activity that allows the user to choose whether they want to send an email, save to
+     *  their google drive or just copy the audit data to their clipboard.
      */
-    private void writeToTextFile(){
+    private void sendEmail(){
         String currDate = Calendar.getInstance().getTime().toString();
-        try {
-            File root = new File (Environment.getExternalStorageDirectory(), "Audits");
-            if(!root.exists()){
-                root.mkdir();
-            }
-            File filepath = new File (root, "myaudit.txt");
-            FileWriter writer = new FileWriter(filepath);
-            writer.append("CONFIRMED ITEMS: \n");
-            for (int i = 0; i < audit.getAuditSize(); i ++){
-                writer.append(audit.getItemNum(i) + "\t" + audit.getMessage(i) + "\n");
-            }
-            writer.append("\nUNCONFIRMED ITEMS: \n");
-            for (int i = 0; i < resultsItems.size(); i ++){
-                writer.append(resultsItems.get(i)+ "\n");
-            }
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("FAILURE TO WRITE FILE");
-            e.printStackTrace();
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AuditSearchResultsPage.this);
+
+        String emailTo = acct.getEmail();
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {emailTo});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Audit for: " + currDate);
+
+        String emailBody = "";
+        emailBody += "CONFIRMED ITEMS: \n";
+        for (int i = 0; i < audit.getAuditSize(); i ++){
+            emailBody += audit.getItemNum(i) + "\t" + audit.getMessage(i) + "\n";
         }
+        emailBody += "\nUNCONFIRMED ITEMS: \n";
+        for (int i = 0; i < resultsItems.size(); i ++){
+            emailBody += resultsItems.get(i)+ "\n";
+        }
+        emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
+
+        emailIntent.setType("message/rfc822");
+
+        startActivity(Intent.createChooser(emailIntent, "Choose an Email client: "));
+
+
     }
+
 
     /**
      *
@@ -237,6 +250,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
     private void initUI() {
         submitButton             = findViewById(R.id.submitButton);
         cancelButton             = findViewById(R.id.cancelButton);
+        returnToHomeButton       = findViewById(R.id.returnToHomeButton);
         resultsListView          = findViewById(R.id.resultsListView);
         confirmedResultsListView = findViewById(R.id.confirmedResultsListView);
     }
