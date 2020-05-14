@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.inventoryauditapp.HomePage;
 import com.example.inventoryauditapp.classes.Computer;
@@ -30,6 +31,8 @@ public class InventorySearchResultsPage extends AppCompatActivity {
     private Button homePageButton;
 
     private ListView resultsListView;
+
+    private TextView title;
 
     private ArrayAdapter<String> resultAdapter;
 
@@ -56,6 +59,8 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         room = getIntent().getStringExtra("room");
         item = getIntent().getStringExtra("item");
 
+        title.setText(item + " Results");
+
         items = new ArrayList<>();
         serialNums = new ArrayList<>();
         retrieveAndDisplayItems();
@@ -76,6 +81,7 @@ public class InventorySearchResultsPage extends AppCompatActivity {
         addItemButton    = findViewById(R.id.addItemButton);
         homePageButton   = findViewById(R.id.returnToHomeButton);
         resultsListView  = findViewById(R.id.resultsListView);
+        title            = findViewById(R.id.inventorySearchResults);
     }
 
     /**
