@@ -93,13 +93,13 @@ public class ModifyItemPage extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
-                ref.setValue(null);
                 Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
                 intent.putExtra("item", itemType);
                 intent.putExtra("building", buildingEditText.getText().toString());
                 intent.putExtra("room", roomEditText.getText().toString());
                 startActivity(intent);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
+                ref.setValue(null);
             }
         });
 
