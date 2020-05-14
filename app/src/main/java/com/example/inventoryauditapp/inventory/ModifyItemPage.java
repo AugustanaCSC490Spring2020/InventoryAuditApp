@@ -34,6 +34,7 @@ public class ModifyItemPage extends AppCompatActivity {
     private TextView itemIDTextView;
     private TextView dateAddedDisplayTextView;
     private TextView lastModifiedDisplayTextView;
+    private TextView modifyItemTitle;
 
     //all text fields that the user can modify
     private EditText buildingEditText;
@@ -140,6 +141,7 @@ public class ModifyItemPage extends AppCompatActivity {
      *  database.  Checks the object type and directs the data display to be a Computer or Printer
      */
     public void initializeTextFields(){
+        modifyItemTitle.setText("Modify " + itemType);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -218,6 +220,7 @@ public class ModifyItemPage extends AppCompatActivity {
         lastScannedTextView         = findViewById(R.id.lastScannedTextView);
         printerTypeSpinner          = findViewById(R.id.printerTypeSpinner);
         printerTypeTextView         = findViewById(R.id.printerTypeTextView);
+        modifyItemTitle             = findViewById(R.id.modifyItemTitle);
     }
 
     //helper method to check if any inputted text is empty;
