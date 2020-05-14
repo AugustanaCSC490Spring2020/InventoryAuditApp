@@ -116,7 +116,7 @@ public class ModifyItemPage extends AppCompatActivity {
         String userEmail            = acct.getEmail();
         User appUser                = new User(userName, userEmail);
         if(!emptyText(itemType, buildingEditText.getText().toString(), roomEditText.getText().toString(), brandEditText.getText().toString(),
-                lastModifiedDisplayTextView.getText().toString(), OSEditText.getText().toString(), serialNum)) {
+                OSEditText.getText().toString(), serialNum)) {
             if (itemType.equals("Computer")) {
                 Computer c;
                 c = new Computer(
@@ -237,7 +237,7 @@ public class ModifyItemPage extends AppCompatActivity {
     }
 
     //helper method to check if any inputted text is empty;
-    private boolean emptyText(String itemType, String building,String room,String brand, String modifiedBy,String os, String serialNumber){
+    private boolean emptyText(String itemType, String building,String room,String brand,String os, String serialNumber){
         if(TextUtils.isEmpty(serialNumber) || serialNumber.equals("")){
             return true;
         }else if(TextUtils.isEmpty(building) || building.equals("")){
@@ -245,8 +245,6 @@ public class ModifyItemPage extends AppCompatActivity {
         }else if(TextUtils.isEmpty(room) || room.equals("")){
             return true;
         }else if(TextUtils.isEmpty(brand) || brand.equals("")) {
-            return true;
-        }else if(TextUtils.isEmpty(modifiedBy) || modifiedBy.equals("")){
             return true;
         }else if(itemType.equals("Computer")){
             if(TextUtils.isEmpty(os) || os.equals("")){
