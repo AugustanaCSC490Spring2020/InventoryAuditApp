@@ -53,7 +53,7 @@ public class AuditSearchResultsPage extends AppCompatActivity {
     private ArrayAdapter<String> resultAdapter;
     private ArrayAdapter<String> confirmedResultAdapter;
 
-    //Data storage for pendig items and confirmed items
+    //Data storage for pending items and confirmed items
     private ArrayList<String> resultsItems;
     private ArrayList<String> confirmedItems;
 

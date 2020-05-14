@@ -30,6 +30,7 @@ public class ModifyItemPage extends AppCompatActivity {
 
     //buttons at the bottom of the screen
     private Button submitButton;
+    private Button deleteButton;
 
     //TextViews of displayed information.  User cannot edit this info
     private TextView itemIDTextView;
@@ -86,6 +87,19 @@ public class ModifyItemPage extends AppCompatActivity {
                     intent.putExtra("room", roomEditText.getText().toString());
                     startActivity(intent);
                 }
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference(itemType).child(serialNum);
+                ref.setValue(null);
+                Intent intent = new Intent(getBaseContext(), InventorySearchResultsPage.class);
+                intent.putExtra("item", itemType);
+                intent.putExtra("building", buildingEditText.getText().toString());
+                intent.putExtra("room", roomEditText.getText().toString());
+                startActivity(intent);
             }
         });
 
@@ -208,13 +222,13 @@ public class ModifyItemPage extends AppCompatActivity {
 
     public void initUI(){
         submitButton                = findViewById(R.id.submitModifyButton);
+        deleteButton                = findViewById(R.id.deleteItemButton);
         buildingEditText            = findViewById(R.id.buildingEditText);
         roomEditText                = findViewById(R.id.roomEditText);
         OSEditText                  = findViewById(R.id.OSEditText);
         brandEditText               = findViewById(R.id.brandEditText);
         dateAddedDisplayTextView    = findViewById(R.id.dateAddedDisplayTextView);
         lastModifiedDisplayTextView = findViewById(R.id.lastScannedDisplayTextView);
-        //modifiedByEditText          = findViewById(R.id.modifiedByEditText);
         OSTextView                  = findViewById(R.id.OSTextView);
         itemIDTextView              = findViewById(R.id.itemIDTextView);
         lastScannedTextView         = findViewById(R.id.lastScannedTextView);
