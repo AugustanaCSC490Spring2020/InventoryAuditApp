@@ -71,7 +71,7 @@ public class LoginStartPage extends AppCompatActivity {
             startActivity(intent);
 
         }catch (ApiException e){
-            Toast.makeText(this, "Could not sign in! Status Code is " + e.getStatusCode(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Could not sign in! Status Code is " + e.getStatusCode() + ".", Toast.LENGTH_SHORT).show();
 
         }
     }
